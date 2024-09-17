@@ -35,10 +35,11 @@ dev = [
 [tool.ruff]
 src = ["src"]
 line-length = 88
-ignore = ["N818"]
 exclude = ["*/migrations/*"]
 
+
 [tool.ruff.lint]
+ignore = ["N818"]
 select = [
     "F",   # Pyflakes
     "E",   # pycodestyle - Errors
