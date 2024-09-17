@@ -9,6 +9,7 @@ dependencies = [
     "pylint>=3.0.3",
     "flake8>=7.0.0",
     "pre-commit>=3.7.1",
+    "ruff>=0.6.5",
 ]
 requires-python = ">=3.11"
 readme = "README.md"
@@ -63,4 +64,4 @@ select = [
     "SIM", # flake8-simplify
     "INT", # flake8-gettext
      "PL",  # Pylint
-] 
+]
