@@ -38,6 +38,7 @@ line-length = 88
 ignore = ["N818"]
 exclude = ["*/migrations/*"]
 
+[tool.ruff.lint]
 select = [
     "F",   # Pyflakes
     "E",   # pycodestyle - Errors
