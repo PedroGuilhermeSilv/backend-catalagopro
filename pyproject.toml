@@ -1,0 +1,66 @@
+[project]
+name = "api-crm"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "guilherme", email = "vinespedro55@gmail.com"},
+]
+dependencies = [
+    "pylint>=3.0.3",
+    "flake8>=7.0.0",
+    "pre-commit>=3.7.1",
+]
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-pep517>=0.12.0"]
+build-backend = "pdm.pep517.api"
+
+
+[tool.pdm]
+distribution = true
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pylint>=3.0.3",
+    "autopep8>=2.0.4",
+    "pytest>=8.0.1",
+]
+
+
+[tool.ruff]
+src = ["src"]
+line-length = 88
+
+exclude = ["*/migrations/*"]
+
+select = [
+    "F",   # Pyflakes
+    "E",   # pycodestyle - Errors
+    "W",   # pycodestyle - Warnings
+    "I",   # isort
+    "N",   # pep8-naming
+    "UP",  # pyupgrade
+    "YTT", # flake8-2020
+    "COM", # flake8-commas
+    "C4",  # flake8-comprehensions
+    "DTZ", # flake8-datetimez
+    "EM",  # flake8-errmsg
+    "EXE", # flake8-executable
+    "FA",  # flake8-future-annotations
+    "ISC", # flake8-implicit-str-concat
+    "ICN", # flake8-import-conventions
+    "G",   # flake8-logging-format
+    "INP", # flake8-no-pep420
+    "PIE", # flake8-pie
+    "T20", # flake8-print
+    "PYI", # flake8-pyi
+    "Q",   # flake8-quotes
+    "RSE", # flake8-raise
+    "RET", # flake8-return
+    "SIM", # flake8-simplify
+    "INT", # flake8-gettext
+     "PL",  # Pylint
+] 
