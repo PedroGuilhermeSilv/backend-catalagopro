@@ -8,7 +8,7 @@
         "source.fixAll": "explicit"
       },
     "python.testing.pytestArgs": [
-      "src",
+      "src"
     ],
     "python.analysis.extraPaths": [
       "./src"
