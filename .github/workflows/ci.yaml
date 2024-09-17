@@ -1,0 +1,33 @@
+name: CI
+on:
+  push:
+    branches: [ "main", "develop", "feat/*" ]
+  pull_request:
+    branches: [ "main", "develop", "feat/*" ]
+
+jobs:
+  ci:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11"]
+        poetry-version: ["1.7.1"]
+        os: [ubuntu-22.04]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup PDM
+        uses: pdm-project/setup-pdm@v4
+
+      - name: Install dependencies
+        run: pdm install -G dev
+
+      - name: Run Lint Ruff
+        run: pdm run ruff check src
+
+      - name: Set PYTHONPATH
+        run: echo PYTHONPATH=$PYTHONPATH:$(pwd)/src >> $GITHUB_ENV
+
+      - name: Run Pytest
+        run: pdm run pytest ./src
