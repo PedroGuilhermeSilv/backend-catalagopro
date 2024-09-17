@@ -35,7 +35,7 @@ dev = [
 [tool.ruff]
 src = ["src"]
 line-length = 88
-
+ignore = ["N818"]
 exclude = ["*/migrations/*"]
 
 select = [
