@@ -2,7 +2,6 @@ import json
 import uuid
 
 import pytest
-
 from src.category.entities.models import Category
 
 

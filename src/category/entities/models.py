@@ -1,7 +1,6 @@
 import uuid
 
 from pydantic import BaseModel, field_validator, model_validator
-
 from src.category.entities.exceptions import erros
 
 LENGTH_NAME = 150
