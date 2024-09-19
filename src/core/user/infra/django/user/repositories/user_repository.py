@@ -30,14 +30,11 @@ class DjangoUserRepository(UserRepository):
             email=user_on_db.email,
         )
 
-    async def get_by_email(self, email: str) -> UserOutput:
-        try:
-            user_on_db = await self.model.objects.aget(email=email)
-        except Exception as e:
-            raise e
-
-        return UserOutput(
-            id=user_on_db.id,
-            password=user_on_db.password,
-            email=user_on_db.email,
-        )
+    async def get_by_email(self, email: str) -> UserOutput | None:
+        if user_on_db := await self.model.objects.filter(email=email).afirst():
+            return UserOutput(
+                id=user_on_db.id,
+                password=user_on_db.password,
+                email=user_on_db.email,
+            )
+        return None
