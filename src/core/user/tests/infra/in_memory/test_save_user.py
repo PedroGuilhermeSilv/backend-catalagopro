@@ -4,7 +4,7 @@ from collections.abc import Generator
 import pytest
 from src.core.user.domain.dto.user_dto import UserInput
 from src.core.user.domain.repository.user_repository import UserRepository
-from src.core.user.infra.in_memory_user import InMemoryUserRepository
+from src.core.user.infra.in_memory.in_memory_user import InMemoryUserRepository
 
 
 @pytest.fixture(scope="function")

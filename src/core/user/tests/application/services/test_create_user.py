@@ -5,7 +5,7 @@ from src.core.user.domain.exceptions.user_exceptions import (
     InvalidUserError,
     UserAlreadyExistError,
 )
-from src.core.user.infra.in_memory_user import InMemoryUserRepository
+from src.core.user.infra.in_memory.in_memory_user import InMemoryUserRepository
 
 STATUS_CONFLICT = 409
 

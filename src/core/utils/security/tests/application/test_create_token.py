@@ -2,7 +2,7 @@ import uuid
 
 import pytest
 from src.core.user.domain.dto.user_dto import UserInput
-from src.core.user.infra.in_memory_user import InMemoryUserRepository
+from src.core.user.infra.in_memory.in_memory_user import InMemoryUserRepository
 from src.core.utils.security.application.dto.jwt import InputAuthUserDto
 from src.core.utils.security.application.service.auth_jwt import JWTCreator
 from src.core.utils.security.jwt import decode_jwt

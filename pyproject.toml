@@ -17,6 +17,7 @@ dependencies = [
     "bcrypt>=4.2.0",
     "pytest-asyncio>=0.24.0",
     "pyjwt>=2.9.0",
+    "pytest-django>=4.9.0",
 ]
 requires-python = ">=3.11"
 readme = "README.md"
@@ -31,6 +32,7 @@ build-backend = "pdm.pep517.api"
 testpaths = ["tests", "src"]
 python_files = ["test_*.py", "*_test.py"]
 asyncio_default_fixture_loop_scope = "function"
+DJANGO_SETTINGS_MODULE = "src.framework.settings"
 
 
 
