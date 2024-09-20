@@ -1,6 +1,6 @@
-from src.core.user.application.dto.user_dto import OutputCreateUser
 from src.core.user.application.service.dto.user_dto import (
     InputServiceCreateUser,
+    OutputCreateUser,
     OutputServiceCreateUser,
 )
 from src.core.user.domain.dto.user_dto import UserInput
