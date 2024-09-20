@@ -2,7 +2,7 @@ from src.core.security.application.service.dto.jwt import InputAuthUserDto, JwtD
 from src.core.user.domain.repository.user_repository import UserRepository
 from src.core.utils.exceptions.erros import InvalidPasswordError, UserNotFoundError
 from src.core.utils.hash import verify_password
-from src.core.utils.jwt import create_jwt
+from src.core.utils.jwt_utils import create_jwt
 
 
 class JWTCreator:

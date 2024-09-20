@@ -2,6 +2,7 @@ import os
 
 import pytest
 from ninja.testing import TestAsyncClient
+
 from src.framework.urls import api
 
 os.environ["NINJA_SKIP_REGISTRY"] = "yes"

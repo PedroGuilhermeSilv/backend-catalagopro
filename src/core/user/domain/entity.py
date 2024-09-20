@@ -4,6 +4,7 @@ from typing import Self
 
 from email_validator import validate_email
 from pydantic import BaseModel, ConfigDict, model_validator
+
 from src.core.user.domain.exceptions.user_exceptions import (
     InvalidEmailError,
     InvalidPasswordError,

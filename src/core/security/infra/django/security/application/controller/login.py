@@ -1,4 +1,5 @@
 from ninja import Router
+
 from src.core.security.application.service.auth_jwt import JWTCreator
 from src.core.security.application.service.dto.jwt import InputAuthUserDto
 from src.core.security.infra.django.security.application.controller.dto.schemas import (
