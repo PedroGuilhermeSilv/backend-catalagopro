@@ -1,3 +1,5 @@
+from collections.abc import Generator
+
 import pytest
 from src.core.user.application.dto.user_dto import InputCreateUser
 from src.core.user.application.service.create_user import CreateUser
@@ -5,14 +7,17 @@ from src.core.user.domain.exceptions.user_exceptions import (
     InvalidUserError,
     UserAlreadyExistError,
 )
+from src.core.user.domain.repository.user_repository import UserRepository
 from src.core.user.infra.in_memory.in_memory_user import InMemoryUserRepository
 
 STATUS_CONFLICT = 409
 
 
-@pytest.fixture
-def repository():
-    return InMemoryUserRepository()
+@pytest.fixture(scope="function")
+def repository() -> Generator[UserRepository, None, None]:
+    repo = InMemoryUserRepository()
+    repo.users.clear()
+    yield repo
 
 
 class TestCreateUser:

@@ -3,6 +3,7 @@ from collections.abc import Generator
 
 import pytest
 from src.core.user.domain.dto.user_dto import UserInput
+from src.core.user.domain.entity import User
 from src.core.user.domain.repository.user_repository import UserRepository
 from src.core.user.infra.in_memory.in_memory_user import InMemoryUserRepository
 
@@ -17,16 +18,20 @@ def repository() -> Generator[UserRepository, None, None]:
 class TestSaveUserWithRepository:
     @pytest.mark.asyncio
     async def test_save_user(self, repository: UserRepository):
-        input = UserInput(
-            id=uuid.uuid4(),
+        user = User(
             email="test@hotmail.com",
             password="12345678",
         )
-        user = await repository.save(input)
+        input = UserInput(
+            id=user.id,
+            email=user.email,
+            password=user.password,
+        )
+        user_on_db = await repository.save(input)
 
-        assert input.email == user.email
-        assert input.id == user.id
-        assert input.password != user.password
+        assert user_on_db.email == user.email
+        assert user_on_db.id == user.id
+        assert user_on_db.password == user.password
 
     @pytest.mark.asyncio
     async def test_get_user_by_email(self, repository: UserRepository):

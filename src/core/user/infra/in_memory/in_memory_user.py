@@ -8,9 +8,8 @@ class InMemoryUserRepository(UserRepository):
         self.users = users
 
     async def save(self, user: UserInput) -> UserOutput:
-        user_ = User(**user.model_dump())
-        self.users.append(user_)
-        return UserOutput(email=user_.email, id=user_.id, password=user_.password)
+        self.users.append(user)
+        return UserOutput(email=user.email, id=user.id, password=user.password)
 
     async def get_by_email(self, email: str) -> UserOutput:
         return next(

@@ -1,11 +1,10 @@
-import uuid
-
 import pytest
+from src.core.security.application.dto.jwt import InputAuthUserDto
+from src.core.security.application.service.auth_jwt import JWTCreator
 from src.core.user.domain.dto.user_dto import UserInput
+from src.core.user.domain.entity import User
 from src.core.user.infra.in_memory.in_memory_user import InMemoryUserRepository
-from src.core.utils.security.application.dto.jwt import InputAuthUserDto
-from src.core.utils.security.application.service.auth_jwt import JWTCreator
-from src.core.utils.security.jwt import decode_jwt
+from src.core.utils.jwt import decode_jwt
 
 EXP = 60
 
@@ -14,10 +13,15 @@ class TestCreateJWT:
     @pytest.mark.asyncio
     async def test_create_jwt(self):
         repository = InMemoryUserRepository()
-        user_input = UserInput(
-            id=uuid.uuid4(),
+        user = User(
             email="test@hotmail.com",
             password="12345678",
+        )
+
+        user_input = UserInput(
+            id=user.id,
+            email=user.email,
+            password=user.password,
         )
         await repository.save(user_input)
 

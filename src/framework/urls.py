@@ -1,6 +1,9 @@
 from django.contrib import admin
 from django.urls import path
 from ninja import NinjaAPI
+from src.core.security.infra.django.security.application.controller.login import (
+    router as login_router,
+)
 from src.core.user.infra.django.user.application.controllers.create_user import (
     router as create_user_router,
 )
@@ -8,6 +11,7 @@ from src.core.user.infra.django.user.application.controllers.create_user import 
 api = NinjaAPI(urls_namespace="api-1.0.0")
 
 api.add_router("/user", create_user_router)
+api.add_router("/auth", login_router)
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", api.urls),

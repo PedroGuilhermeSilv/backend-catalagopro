@@ -2,8 +2,9 @@ import uuid
 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.db import models
-from src.core.user.infra.django.user.exceptions.erros import InvalidEmail
-from src.core.utils.security.hash import get_password_hash
+from src.core.user.infra.django.user.application.controllers.exceptions.erros import (
+    InvalidEmail,
+)
 
 
 class CustomUserManager(UserManager):
@@ -24,7 +25,7 @@ class CustomUserManager(UserManager):
 
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
-        user.password = get_password_hash(password)
+        user.password = password
         user.save(using=self.db)
 
         return user

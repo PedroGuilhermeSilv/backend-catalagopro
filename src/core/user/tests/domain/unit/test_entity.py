@@ -3,7 +3,7 @@ from src.core.user.domain.entity import User
 from src.core.user.domain.exceptions.user_exceptions import (
     InvalidUserError,
 )
-from src.core.utils.security.hash import verify_password
+from src.core.utils.hash import verify_password
 
 
 class TestUnitClassUser:

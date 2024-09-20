@@ -1,6 +1,5 @@
-import uuid
-
 import pytest
+from src.core.user.domain.entity import User
 from src.core.user.infra.django.user.repositories.user_repository import (
     DjangoUserRepository,
     UserInput,
@@ -19,31 +18,39 @@ class TestCreateUserRepository:
     @pytest.mark.asyncio
     async def test_create_user(self, repository: DjangoUserRepository):
         repo = await anext(repository)
-        input = UserInput(
-            id=uuid.uuid4(),
+        user = User(
             email="test@hotmail.com",
             password="12345678",
         )
+        input = UserInput(
+            id=user.id,
+            email=user.email,
+            password=user.password,
+        )
 
-        user = await repo.save(user=input)
+        user_on_db = await repo.save(user=input)
 
-        assert input.email == user.email
-        assert input.id == user.id
-        assert input.password != user.password
+        assert user_on_db.email == user.email
+        assert user_on_db.id == user.id
+        assert user_on_db.password == user.password
 
     @pytest.mark.asyncio
     async def test_get_user_by_email(self, repository: DjangoUserRepository):
         repo = await anext(repository)
-        input = UserInput(
-            id=uuid.uuid4(),
+        user = User(
             email="test@hotmail.com",
             password="12345678",
+        )
+        input = UserInput(
+            id=user.id,
+            email=user.email,
+            password=user.password,
         )
 
         await repo.save(user=input)
 
-        user = await repo.get_by_email(email=input.email)
+        user_on_db = await repo.get_by_email(email=input.email)
 
-        assert input.email == user.email
-        assert input.id == user.id
-        assert input.password != user.password
+        assert user_on_db.email == user.email
+        assert user_on_db.id == user.id
+        assert user_on_db.password == user.password

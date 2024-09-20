@@ -9,7 +9,7 @@ from src.core.user.domain.exceptions.user_exceptions import (
     InvalidPasswordError,
     InvalidUserError,
 )
-from src.core.utils.security.hash import get_password_hash
+from src.core.utils.hash import get_password_hash
 
 LENGTH_PASSWORD = 8
 
