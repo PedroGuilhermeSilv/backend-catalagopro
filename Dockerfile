@@ -8,7 +8,7 @@ RUN apt update  && apt-get upgrade -y && apt install -y --no-install-recommends 
     curl \
     wget \
     fonts-powerline \
-    && apt-get clean 
+    && apt-get clean
 
 
 
@@ -43,9 +43,8 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 RUN echo "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" >> ~/.zshrc && \
     echo "HISTFILE=/home/python/zsh/.zsh_history" >> ~/.zshrc && \
     echo 'eval "$(pdm --pep582)"' >> ~/.zshrc && \
-    echo 'eval "$(pdm --pep582)"' >> ~/.bashrc 
-    
+    echo 'eval "$(pdm --pep582)"' >> ~/.bashrc
+
 
 
 CMD [ "tail","-f","/dev/null" ]
-

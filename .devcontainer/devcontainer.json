@@ -36,7 +36,7 @@
 	"settings":{
 		"terminal.integrated.defaultProfile.linux": "zsh"
 	},
-	
+
 	// Uncomment the next line to run commands after the container is created.
 	// "postCreateCommand": "cat /etc/os-release",
 
@@ -56,7 +56,7 @@
 				"sourcery.sourcery",
 				"vivaxy.vscode-conventional-commits"
 			]
-			
+
 		}
 	},
 	"remoteUser": "python"

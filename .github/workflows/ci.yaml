@@ -1,16 +1,17 @@
 name: CI
-
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    branches: [ "main", "develop", "feat/*" ]
 
 jobs:
-  build:
-    runs-on: ubuntu-22.04
+  ci:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11"]
+        poetry-version: ["1.7.1"]
+        os: [ubuntu-22.04]
+    runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v4
@@ -18,17 +19,15 @@ jobs:
         uses: pdm-project/setup-pdm@v4
 
       - name: Install dependencies
-        run: pdm install -G dev
-
-      - name: Remove executable permissions from __init__.py files
-        run: |
-          find src -name "__init__.py" -exec chmod -x {} +
+        run: pdm install
 
       - name: Run Lint Ruff
         run: pdm run ruff check src
 
       - name: Set PYTHONPATH
         run: echo PYTHONPATH=$PYTHONPATH:$(pwd)/src >> $GITHUB_ENV
+        env:
+          DEBUG: ${{env.DEBUG}}
 
       - name: Run Pytest
         run: pdm run pytest ./src
