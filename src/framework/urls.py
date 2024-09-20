@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from ninja import NinjaAPI
+
 from src.core.security.infra.django.security.application.controller.login import (
     router as login_router,
 )
