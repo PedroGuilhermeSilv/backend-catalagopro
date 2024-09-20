@@ -56,7 +56,7 @@ exclude = ["*/migrations/*"]
 
 
 [tool.ruff.lint]
-ignore = ["N818"]
+ignore = ["N818", "EXE002"]
 select = [
     "F",   # Pyflakes
     "E",   # pycodestyle - Errors
