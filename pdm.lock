@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:4accd8dba08db69614278cc082e0ffda1a5d25501fcadb6efcebf350909dffbf"
+content_hash = "sha256:e7e08ebd4c058e2224c1aa936c5eda39ac8acaf83e7044deb34b6ac222e9ddfd"
 
 [[package]]
 name = "annotated-types"
@@ -236,6 +236,21 @@ dependencies = [
 files = [
     {file = "Django-5.1.1-py3-none-any.whl", hash = "sha256:71603f27dac22a6533fb38d83072eea9ddb4017fead6f67f2562a40402d61c3f"},
     {file = "Django-5.1.1.tar.gz", hash = "sha256:021ffb7fdab3d2d388bc8c7c2434eb9c1f6f4d09e6119010bbb1694dda286bc2"},
+]
+
+[[package]]
+name = "django-ninja"
+version = "1.3.0"
+requires_python = ">=3.7"
+summary = "Django Ninja - Fast Django REST framework"
+groups = ["default"]
+dependencies = [
+    "Django>=3.1",
+    "pydantic<3.0.0,>=2.0",
+]
+files = [
+    {file = "django_ninja-1.3.0-py3-none-any.whl", hash = "sha256:f58096b6c767d1403dfd6c49743f82d780d7b9688d9302ecab316ac1fa6131bb"},
+    {file = "django_ninja-1.3.0.tar.gz", hash = "sha256:5b320e2dc0f41a6032bfa7e1ebc33559ae1e911a426f0c6be6674a50b20819be"},
 ]
 
 [[package]]
