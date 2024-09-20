@@ -19,7 +19,5 @@ response = {
     200: LoginOutputDto,
     403: Error,
     404: Error,
-    400: Error,
     500: Error,
-    422: Error,
 }

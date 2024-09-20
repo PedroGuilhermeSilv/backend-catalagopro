@@ -1,6 +1,6 @@
 import pytest
-from src.core.security.application.dto.jwt import InputAuthUserDto
 from src.core.security.application.service.auth_jwt import JWTCreator
+from src.core.security.application.service.dto.jwt import InputAuthUserDto
 from src.core.user.domain.dto.user_dto import UserInput
 from src.core.user.domain.entity import User
 from src.core.user.infra.in_memory.in_memory_user import InMemoryUserRepository

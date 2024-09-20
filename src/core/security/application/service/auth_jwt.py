@@ -1,4 +1,4 @@
-from src.core.security.application.dto.jwt import InputAuthUserDto, JwtDto
+from src.core.security.application.service.dto.jwt import InputAuthUserDto, JwtDto
 from src.core.user.domain.repository.user_repository import UserRepository
 from src.core.utils.exceptions.erros import InvalidPasswordError, UserNotFoundError
 from src.core.utils.hash import verify_password
