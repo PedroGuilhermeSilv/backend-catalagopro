@@ -7,11 +7,21 @@ class Error(Schema):
     message: str
 
 
-class UserOutputDto(Schema):
+class UserCreateDto(Schema):
     email: str
     password: str
 
 
-class UserCreateDto(Schema):
+class UserOutputDto(Schema):
     email: str
     id: uuid.UUID
+
+
+response = {
+    201: UserOutputDto,
+    404: Error,
+    409: Error,
+    400: Error,
+    500: Error,
+    422: Error,
+}

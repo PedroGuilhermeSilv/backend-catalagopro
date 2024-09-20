@@ -5,7 +5,7 @@ from src.core.user.infra.django.user.application.controllers.create_user import 
     router as create_user_router,
 )
 
-api = NinjaAPI()
+api = NinjaAPI(urls_namespace="api-1.0.0")
 
 api.add_router("/user", create_user_router)
 urlpatterns = [

@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:ad0f4536c6b8f3de3aff64e001d11b72c6b1f4c0689474e962b7c815477df2d3"
+content_hash = "sha256:5ce4b9b6dfea89d365283f3ba2cfcc44144b4646c7ee384a2149db380dc36117"
 
 [[package]]
 name = "annotated-types"
@@ -585,6 +585,20 @@ dependencies = [
 files = [
     {file = "pytest_django-4.9.0-py3-none-any.whl", hash = "sha256:1d83692cb39188682dbb419ff0393867e9904094a549a7d38a3154d5731b2b99"},
     {file = "pytest_django-4.9.0.tar.gz", hash = "sha256:8bf7bc358c9ae6f6fc51b6cebb190fe20212196e6807121f11bd6a3b03428314"},
+]
+
+[[package]]
+name = "pytest-env"
+version = "1.1.5"
+requires_python = ">=3.8"
+summary = "pytest plugin that allows you to add environment variables."
+groups = ["default"]
+dependencies = [
+    "pytest>=8.3.3",
+]
+files = [
+    {file = "pytest_env-1.1.5-py3-none-any.whl", hash = "sha256:ce90cf8772878515c24b31cd97c7fa1f4481cd68d588419fd45f10ecaee6bc30"},
+    {file = "pytest_env-1.1.5.tar.gz", hash = "sha256:91209840aa0e43385073ac464a554ad2947cc2fd663a9debf88d03b01e0cc1cf"},
 ]
 
 [[package]]

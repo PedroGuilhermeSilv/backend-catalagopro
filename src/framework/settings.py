@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from typing import Any
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -82,6 +83,28 @@ DATABASES = {
     },
 }
 
+
+def monkeypatch_ninja_uuid_converter() -> None:
+    import importlib
+    import sys
+
+    import django.urls
+
+    module_name = "ninja.signature.utils"
+    sys.modules.pop(module_name, None)
+
+    original_register_converter = django.urls.register_converter
+
+    def fake_register_converter(*_: Any, **__: Any) -> None:
+        pass
+
+    django.urls.register_converter = fake_register_converter
+    importlib.import_module(module_name)
+
+    django.urls.register_converter = original_register_converter
+
+
+monkeypatch_ninja_uuid_converter()
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
