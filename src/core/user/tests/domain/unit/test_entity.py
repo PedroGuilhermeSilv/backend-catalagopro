@@ -1,7 +1,7 @@
 import pytest
 
 from src.core.user.domain.entity import User
-from src.core.user.domain.exceptions.user_exceptions import (
+from src.core.user.domain.exceptions import (
     InvalidUserError,
 )
 from src.core.utils.hash import verify_password

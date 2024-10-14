@@ -3,10 +3,10 @@ from src.core.user.application.service.dto.user_dto import (
     OutputCreateUser,
     OutputServiceCreateUser,
 )
-from src.core.user.domain.dto.user_dto import UserInput
+from src.core.user.domain.dto import UserInput
 from src.core.user.domain.entity import User
-from src.core.user.domain.exceptions.user_exceptions import UserAlreadyExistError
-from src.core.user.domain.repository.user_repository import UserRepository
+from src.core.user.domain.exceptions import UserAlreadyExistError
+from src.core.user.domain.repository import UserRepository
 
 
 class CreateUser:

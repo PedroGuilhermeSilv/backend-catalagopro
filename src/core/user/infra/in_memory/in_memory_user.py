@@ -1,6 +1,6 @@
-from src.core.user.domain.dto.user_dto import UserInput, UserOutput
+from src.core.user.domain.dto import UserInput, UserOutput
 from src.core.user.domain.entity import User
-from src.core.user.domain.repository.user_repository import UserRepository
+from src.core.user.domain.repository import UserRepository
 
 
 class InMemoryUserRepository(UserRepository):

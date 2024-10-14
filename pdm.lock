@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:1815161eb0424d55d591c2690085ef4adee19292695c322a3fdf8b368f721355"
+content_hash = "sha256:57a8ca5ad2693f0c173aa7b96e480bb8feb56ca94850e0257e2c535b908e7512"
 
 [[package]]
 name = "annotated-types"
@@ -149,6 +149,20 @@ dependencies = [
 files = [
     {file = "Django-5.1.1-py3-none-any.whl", hash = "sha256:71603f27dac22a6533fb38d83072eea9ddb4017fead6f67f2562a40402d61c3f"},
     {file = "Django-5.1.1.tar.gz", hash = "sha256:021ffb7fdab3d2d388bc8c7c2434eb9c1f6f4d09e6119010bbb1694dda286bc2"},
+]
+
+[[package]]
+name = "django-cockroachdb"
+version = "5.1"
+requires_python = ">=3.10"
+summary = "Django backend for CockroachDB"
+groups = ["default"]
+dependencies = [
+    "django<5.2,>=5.1",
+]
+files = [
+    {file = "django-cockroachdb-5.1.tar.gz", hash = "sha256:12502612b60133a4a2e6633246cd1801616e212e999f7db1b98efb8cb39cdc17"},
+    {file = "django_cockroachdb-5.1-py3-none-any.whl", hash = "sha256:9cb8ad02b9e9ea7d7e7284b902a70fb2455fa6d98bfb40ec222171ac203a8ee7"},
 ]
 
 [[package]]

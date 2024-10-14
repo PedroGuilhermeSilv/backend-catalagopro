@@ -4,11 +4,11 @@ import pytest
 
 from src.core.user.application.service.create_user import CreateUser
 from src.core.user.application.service.dto.user_dto import InputCreateUser
-from src.core.user.domain.exceptions.user_exceptions import (
+from src.core.user.domain.exceptions import (
     InvalidUserError,
     UserAlreadyExistError,
 )
-from src.core.user.domain.repository.user_repository import UserRepository
+from src.core.user.domain.repository import UserRepository
 from src.core.user.infra.in_memory.in_memory_user import InMemoryUserRepository
 
 STATUS_CONFLICT = 409

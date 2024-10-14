@@ -111,7 +111,7 @@ DATABASES = (
     if DEBUG
     else {
         "default": {
-            "ENGINE": "django.db.backends.postgresql",
+            "ENGINE": "django_cockroachdb",
             "NAME": os.getenv("DATABASE_NAME"),
             "USER": os.getenv("DATABASE_USER"),
             "PASSWORD": os.getenv("DATABASE_PASSWORD"),

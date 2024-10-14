@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from src.core.user.domain.dto.user_dto import UserInput, UserOutput
+from src.core.user.domain.dto import UserInput, UserOutput
 
 
 class UserRepository(ABC):
