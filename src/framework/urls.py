@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from ninja import NinjaAPI
 
-from core.security.infra.django.security.application.controller.auth import (
+from src.core.security.infra.django.security.application.controller.auth import (
     router as login_router,
 )
 from src.core.user.infra.django.application.controllers.create_user import (
