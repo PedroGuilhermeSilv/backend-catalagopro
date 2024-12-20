@@ -4,11 +4,11 @@ from src.core.user.application.service.create_user import (
     CreateUser,
     InputServiceCreateUser,
 )
-from src.core.user.infra.django.user.application.controllers.dto.schemas import (
+from src.core.user.infra.django.application.controllers.dto.schemas import (
     UserCreateDto,
     response,
 )
-from src.core.user.infra.django.user.repositories.user_repository import (
+from src.core.user.infra.django.repositories.user_repository import (
     DjangoUserRepository,
 )
 

@@ -1,11 +1,11 @@
 import pytest
 
-from src.core.security.application.service.auth_jwt import JWTCreator
+from src.core.security.application.service.create_token import JWTCreator
 from src.core.security.application.service.dto.jwt import InputAuthUserDto
 from src.core.user.domain.dto import UserInput
 from src.core.user.domain.entity import User
 from src.core.user.infra.in_memory.in_memory_user import InMemoryUserRepository
-from src.core.utils.jwt_utils import decode_jwt
+from src.core.utils.token import decode_jwt
 
 EXP = 60
 
@@ -32,6 +32,7 @@ class TestCreateJWT:
 
         assert response.token is not None
         assert response.exp == EXP
+        assert response.refresh_token is not None
         decode = decode_jwt(response.token)
         assert decode["email"] == "test@hotmail.com"
         assert decode["exp"] == EXP

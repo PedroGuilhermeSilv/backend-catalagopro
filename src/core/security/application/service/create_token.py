@@ -1,15 +1,15 @@
-from src.core.security.application.service.dto.jwt import InputAuthUserDto, JwtDto
+from src.core.security.application.service.dto.jwt import InputAuthUserDto, JwtOutPutDto
 from src.core.user.domain.repository import UserRepository
 from src.core.utils.exceptions.erros import InvalidPasswordError, UserNotFoundError
 from src.core.utils.hash import verify_password
-from src.core.utils.jwt_utils import create_jwt
+from src.core.utils.token import create_refresh_token, create_token
 
 
 class JWTCreator:
     def __init__(self, repository: UserRepository):
         self.repository = repository
 
-    async def execute(self, input: InputAuthUserDto) -> JwtDto:
+    async def execute(self, input: InputAuthUserDto) -> JwtOutPutDto:
         user = await self.repository.get_by_email(input.email)
         if not user:
             raise UserNotFoundError
@@ -18,8 +18,9 @@ class JWTCreator:
             if not verify_password(input.password, user.password):
                 raise InvalidPasswordError
             payload = {"email": user.email}
-            token = create_jwt(payload, expires_in=60)
+            token = create_token(payload, expires_in=60)
+            refresh_token = create_refresh_token(payload)
 
         except Exception as error:
             raise error
-        return JwtDto(token=token, exp=60)
+        return JwtOutPutDto(token=token, refresh_token=refresh_token, exp=60)

@@ -31,7 +31,11 @@ class TestControllerLogin:
         assert response.status_code == STATUS_CODE_201
 
         response = await client.post("/auth/login/", json=body)
+        assert response.json().get("token") is not None
+        assert response.json().get("exp") is not None
+        assert response.json().get("refresh_token") is not None
         assert response.status_code == STATUS_CODE_200
+
 
     @pytest.mark.asyncio
     async def test_login_with_invalid_email(self, client):

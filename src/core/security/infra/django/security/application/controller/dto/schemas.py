@@ -9,8 +9,11 @@ class LoginInputDto(Schema):
     email: str
     password: str
 
+class InputRefreshTokenDto(Schema):
+    token: str
 
 class LoginOutputDto(Schema):
+    refresh_token: str
     token: str
     exp: int
 
