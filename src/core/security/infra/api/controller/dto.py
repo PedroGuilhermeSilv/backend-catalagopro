@@ -1,18 +1,18 @@
 from ninja import Router
 
-from src.core.security.application.service.create_token import JWTCreator
-from src.core.security.application.service.dto.jwt import InputAuthUserDto
-from src.core.security.application.service.refresh_token import (
+from src.core.security.application.use_cases.create_token import JWTCreator
+from src.core.security.application.service.dto.jwt import (
+    InputAuthUserDto,
     InputRefreshToken,
-    JWTRefresh,
 )
-from src.core.security.infra.django.security.application.controller.dto.schemas import (
+from src.core.security.application.service.security_service import SecurityService
+from core.security.infra.api.controller.schemas import (
     InputRefreshTokenDto,
     LoginInputDto,
     LoginOutputDto,
     response,
 )
-from src.core.user.infra.django.repositories.user_repository import DjangoUserRepository
+from core.user.infra.api.repository import DjangoUserRepository
 
 router = Router()
 
@@ -20,8 +20,8 @@ router = Router()
 @router.post("/login/", response=response)
 async def login(request, login: LoginInputDto) -> LoginOutputDto:
     try:
-        service = JWTCreator(repository=DjangoUserRepository())
-        response = await service.execute(input=InputAuthUserDto(**login.dict()))
+        service = SecurityService(repository=DjangoUserRepository())
+        response = await service.create_token(input=InputAuthUserDto(**login.dict()))
     except Exception as e:
         return e.status_code, {"message": str(e.msg)}
     return 200, response
@@ -30,8 +30,8 @@ async def login(request, login: LoginInputDto) -> LoginOutputDto:
 @router.post("/refresh/", response=response)
 async def refresh(request, token: InputRefreshTokenDto) -> LoginOutputDto:
     try:
-        service = JWTRefresh(repository=DjangoUserRepository())
-        response = await service.execute(
+        service = SecurityService(repository=DjangoUserRepository())
+        response = await service.create_refresh_token(
             input=InputRefreshToken(refresh_token=token.token),
         )
     except Exception as e:

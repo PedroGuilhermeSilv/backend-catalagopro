@@ -1,6 +1,6 @@
 import pytest
 
-from src.core.security.application.service.create_token import JWTCreator
+from src.core.security.application.use_cases.create_token import JWTCreator
 from src.core.security.application.service.dto.jwt import InputAuthUserDto
 from src.core.user.domain.dto import UserInput
 from src.core.user.domain.entity import User

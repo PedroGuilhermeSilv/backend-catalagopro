@@ -3,7 +3,7 @@ import uuid
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.db import models
 
-from src.core.user.infra.django.application.controllers.exceptions.erros import (
+from src.core.user.infra.api.controllers.exceptions import (
     InvalidEmail,
 )
 

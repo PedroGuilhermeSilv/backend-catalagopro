@@ -2,10 +2,10 @@ from django.contrib import admin
 from django.urls import path
 from ninja import NinjaAPI
 
-from src.core.security.infra.django.security.application.controller.auth import (
+from core.security.infra.api.controller.dto import (
     router as login_router,
 )
-from src.core.user.infra.django.application.controllers.create_user import (
+from src.core.user.infra.api.controllers.create_user import (
     router as create_user_router,
 )
 

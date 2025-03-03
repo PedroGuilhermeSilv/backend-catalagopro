@@ -1,4 +1,4 @@
-from src.core.user.application.service.dto.user_dto import (
+from core.user.application.service.user_dto import (
     InputServiceCreateUser,
     OutputCreateUser,
     OutputServiceCreateUser,

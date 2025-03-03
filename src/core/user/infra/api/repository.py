@@ -1,6 +1,6 @@
 from src.core.user.domain.dto import UserInput, UserOutput
 from src.core.user.domain.repository import UserRepository
-from src.core.user.infra.django.models import User as UserModel
+from src.core.user.infra.api.models import User as UserModel
 
 
 class DjangoUserRepository(UserRepository):

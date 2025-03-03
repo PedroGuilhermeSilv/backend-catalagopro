@@ -2,8 +2,9 @@ from collections.abc import Generator
 
 import pytest
 
-from src.core.user.application.service.create_user import CreateUser
-from src.core.user.application.service.dto.user_dto import InputCreateUser
+from src.core.user.application.service.user_dto import InputCreateUser
+from src.core.user.application.use_case.create_user import CreateUser
+
 from src.core.user.domain.exceptions import (
     InvalidUserError,
     UserAlreadyExistError,
