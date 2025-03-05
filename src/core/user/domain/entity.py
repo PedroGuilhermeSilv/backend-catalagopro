@@ -11,13 +11,17 @@ from src.core.user.domain.exceptions import (
     InvalidUserError,
 )
 from src.core.utils.hash import get_password_hash
+from typing import Optional
 
 LENGTH_PASSWORD = 8
 
 
 class User(BaseModel):
+    name: str
     email: str
     password: str
+    role: Optional[str] = None
+    store_slug: Optional[str] = None
     id: uuid.UUID = field(default_factory=uuid.uuid4)
 
     @model_validator(mode="before")

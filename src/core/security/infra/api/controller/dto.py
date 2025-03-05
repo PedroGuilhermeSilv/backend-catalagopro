@@ -12,9 +12,9 @@ from core.security.infra.api.controller.schemas import (
     LoginOutputDto,
     response,
 )
-from core.user.infra.api.repository import DjangoUserRepository
+from core.user.infra.database.repository import DjangoUserRepository
 
-router = Router()
+router = Router(tags=["Auth"])
 
 
 @router.post("/login/", response=response)

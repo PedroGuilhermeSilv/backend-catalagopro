@@ -18,8 +18,20 @@ class CreateUser:
             raise UserAlreadyExistError
 
         try:
-            user = User(email=input.email, password=input.password)
+            user = User(
+                email=input.email,
+                password=input.password,
+                role=input.role,
+                name=input.name,
+                store_slug=input.store_slug,
+            )
             user = await self.repository.save(UserInput(**user.model_dump()))
         except Exception as error:
             raise error
-        return OutputCreateUser(email=user.email, id=user.id)
+        return OutputCreateUser(
+            email=user.email,
+            id=user.id,
+            role=user.role,
+            store_slug=user.store_slug,
+            name=user.name,
+        )

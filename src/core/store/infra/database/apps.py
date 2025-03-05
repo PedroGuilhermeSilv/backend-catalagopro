@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 
-class UserConfig(AppConfig):
+class StoreConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "src.core.user.infra.api"
-    label = "user"
+    name = "src.core.store.infra.database"
+    label = "store"

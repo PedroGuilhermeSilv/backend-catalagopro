@@ -3,9 +3,7 @@ import uuid
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.db import models
 
-from src.core.user.infra.api.controllers.exceptions import (
-    InvalidEmail,
-)
+from src.core.user.infra.api.controllers.exceptions import InvalidEmail
 
 
 class CustomUserManager(UserManager):
@@ -50,6 +48,8 @@ class CustomUserManager(UserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True)
+    name = models.CharField(max_length=255, null=True, blank=True)
+    role = models.CharField(max_length=255, null=True, blank=True)
 
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)

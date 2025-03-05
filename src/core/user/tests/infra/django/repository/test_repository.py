@@ -1,7 +1,7 @@
 import pytest
 
 from src.core.user.domain.entity import User
-from core.user.infra.api.repository import (
+from core.user.infra.database.repository import (
     DjangoUserRepository,
     UserInput,
 )

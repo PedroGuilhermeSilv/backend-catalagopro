@@ -17,7 +17,11 @@ class JWTCreator:
         try:
             if not verify_password(input.password, user.password):
                 raise InvalidPasswordError
-            payload = {"email": user.email}
+            payload = {
+                "email": user.email,
+                "tenant": user.store_slug if user.store_slug else None,
+                "role": user.role if user.role else None,
+            }
             token = create_token(payload, expires_in=60)
             refresh_token = create_refresh_token(payload)
 
