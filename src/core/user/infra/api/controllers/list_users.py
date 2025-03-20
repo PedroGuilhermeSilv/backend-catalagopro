@@ -1,15 +1,10 @@
-from core import user
-from core.user.application.use_case.create_user import (
-    InputServiceCreateUser,
-)
 from src.core.user.application.service.user_service import UserService
-from src.core.user.infra.database.repository import (
-    DjangoUserRepository,
-)
-
 from src.core.user.infra.api.controllers.dtos import (
     UserListOutputDto,
     UserOutputDto,
+)
+from src.core.user.infra.database.repository import (
+    DjangoUserRepository,
 )
 
 
@@ -18,7 +13,7 @@ async def list(request):
         service = UserService(repository=DjangoUserRepository())
         result = await service.list_users()
         result = UserListOutputDto(
-            data=[UserOutputDto(**user.model_dump()) for user in result]
+            data=[UserOutputDto(**user.model_dump()) for user in result],
         )
 
     except Exception as e:

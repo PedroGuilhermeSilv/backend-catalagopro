@@ -1,5 +1,5 @@
+from core.user.infra.interfaces.repository import UserRepository
 from src.core.user.domain.dto import UserOutput
-from src.core.user.domain.repository import UserRepository
 
 
 class GetUserByEmail:

@@ -59,7 +59,7 @@ exclude = ["*/migrations/*"]
 
 
 [tool.ruff.lint]
-ignore = ["N818", "EXE002"]
+ignore = ["N818", "EXE002", "PLR0913"]
 select = [
     "F",   # Pyflakes
     "E",   # pycodestyle - Errors

@@ -1,8 +1,9 @@
-from pydantic import BaseModel
 from typing import Any
 
+from src.core.utils.model import Model
 
-class UploadedFile(BaseModel):
+
+class UploadedFile(Model):
     name: str
     content: bytes
     content_type: str
@@ -22,5 +23,3 @@ class UploadedFile(BaseModel):
             content=content,
             content_type=uploaded_file.content_type,
         )
-
-    model_config = {"arbitrary_types_allowed": True}

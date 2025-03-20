@@ -1,24 +1,109 @@
-from typing import Optional
 import uuid
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import ConfigDict, field_validator
+
+from src.core.user.domain.entity import UserRole
+from src.core.utils.enums import Status
+from src.core.utils.model import Model
 
 
-class UserOutput(BaseModel):
+class UserOutput(Model):
     name: str
     email: str
-    password: Optional[str] = None
     id: uuid.UUID
-    store_slug: Optional[str] = None
-    role: Optional[str] = None
+    status: Status
+    role: UserRole
+    password: str | None = None
+    store_slug: str | None = None
     model_config = ConfigDict(extra="forbid")
 
+    @field_validator("role")
+    @classmethod
+    def validate_role(cls, v):
+        if v is None:
+            return None
+        if isinstance(v, UserRole):
+            return v
+        if isinstance(v, str):
+            try:
+                return UserRole[v]
+            except KeyError:
+                try:
+                    return UserRole(v)
+                except ValueError:
+                    return v
+        return v
 
-class UserInput(BaseModel):
+    @field_validator("status")
+    @classmethod
+    def validate_status(cls, v):
+        if isinstance(v, Status):
+            return v
+        if isinstance(v, str):
+            try:
+                return Status[v]
+            except KeyError:
+                try:
+                    return Status(v)
+                except ValueError:
+                    return v
+        return v
+
+    def model_dump(self, **kwargs):
+        data = super().model_dump(**kwargs)
+        if self.role and hasattr(self.role, "value"):
+            data["role"] = self.role.value
+        if self.status and hasattr(self.status, "value"):
+            data["status"] = self.status.value
+        return data
+
+
+class UserInput(Model):
     id: uuid.UUID
     email: str
     name: str
     password: str
-    store_slug: Optional[str] = None
-    role: Optional[str] = None
+    status: Status
+    store_slug: str | None = None
+    role: UserRole | None = None
     model_config = ConfigDict(extra="forbid")
+
+    @field_validator("role")
+    @classmethod
+    def validate_role(cls, v):
+        if v is None:
+            return None
+        if isinstance(v, UserRole):
+            return v
+        if isinstance(v, str):
+            try:
+                return UserRole[v]
+            except KeyError:
+                try:
+                    return UserRole(v)
+                except ValueError:
+                    return v
+        return v
+
+    @field_validator("status")
+    @classmethod
+    def validate_status(cls, v):
+        if isinstance(v, Status):
+            return v
+        if isinstance(v, str):
+            try:
+                return Status[v]
+            except KeyError:
+                try:
+                    return Status(v)
+                except ValueError:
+                    return v
+        return v
+
+    def model_dump(self, **kwargs):
+        data = super().model_dump(**kwargs)
+        if self.role and hasattr(self.role, "value"):
+            data["role"] = self.role.value
+        if self.status and hasattr(self.status, "value"):
+            data["status"] = self.status.value
+        return data

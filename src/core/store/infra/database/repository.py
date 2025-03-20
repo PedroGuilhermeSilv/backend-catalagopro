@@ -1,21 +1,30 @@
-from src.core.store.domain.entity import Store, BusinessHour
-from src.core.store.domain.repository import StoreRepository
+from datetime import datetime
+
+from asgiref.sync import sync_to_async
+from src.core.store.domain.dtos import StoreListDto
+from src.core.store.domain.entity import BusinessHour, Store
 from src.core.store.infra.database.models import (
     Store as StoreModel,
 )
-from datetime import datetime
 from src.core.user.infra.database.models import User as UserModel
+
+from core.store.infra.interfaces.repository import StoreRepository
+
 
 class DjangoStoreRepository(StoreRepository):
     def __init__(self):
         self.model_store = StoreModel
         self.model_user = UserModel
-    def _convert_to_domain(self, store_model: StoreModel) -> Store:
+
+    async def _convert_to_domain(self, store_model: StoreModel) -> Store:
         """Converte o modelo Django para a entidade do domínio"""
+        # Using async access for related field
+        owner = await self.model_user.objects.aget(id=store_model.owner_id_id)
+
         store_data = {
-            "id": store_model.id,
+            "id": str(store_model.id),
             "name": store_model.name,
-            "owner_id": str(store_model.owner_id),
+            "owner_id": str(owner.id),
             "created_at": datetime.combine(store_model.created_at, datetime.min.time()),
             "updated_at": datetime.combine(store_model.updated_at, datetime.min.time()),
             "slug": store_model.slug,
@@ -31,6 +40,7 @@ class DjangoStoreRepository(StoreRepository):
                 )
                 for hour in store_model.business_hours
             ],
+            "status": store_model.status,
         }
         return Store(**store_data)
 
@@ -41,12 +51,19 @@ class DjangoStoreRepository(StoreRepository):
 
         store_model = await self.model_store.objects.acreate(**store_data)
 
-        return self._convert_to_domain(store_model)
+        return await self._convert_to_domain(store_model)
 
     async def get_by_id(self, id: str) -> Store:
         store_model = await self.model_store.objects.aget(id=id)
-        return self._convert_to_domain(store_model)
+        return await self._convert_to_domain(store_model)
 
     async def get_by_slug(self, slug: str) -> Store:
         store_model = await self.model_store.objects.aget(slug=slug)
-        return self._convert_to_domain(store_model)
+        return await self._convert_to_domain(store_model)
+
+    async def list(self) -> list[StoreListDto]:
+        store_models = await sync_to_async(list)(self.model_store.objects.all())
+        result = []
+        for model in store_models:
+            result.append(await self._convert_to_domain(model))
+        return result

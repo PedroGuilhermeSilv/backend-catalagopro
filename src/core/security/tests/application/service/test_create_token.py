@@ -1,7 +1,7 @@
 import pytest
 
-from src.core.security.application.use_cases.create_token import JWTCreator
 from src.core.security.application.service.dto.jwt import InputAuthUserDto
+from src.core.security.application.use_cases.create_token import JWTCreator
 from src.core.user.domain.dto import UserInput
 from src.core.user.domain.entity import User
 from src.core.user.infra.in_memory.in_memory_user import InMemoryUserRepository
@@ -17,12 +17,18 @@ class TestCreateJWT:
         user = User(
             email="test@hotmail.com",
             password="12345678",
+            name="test",
+            role="ADMIN",
+            status="ACTIVE",
         )
 
         user_input = UserInput(
             id=user.id,
             email=user.email,
             password=user.password,
+            name=user.name,
+            role=user.role.value,
+            status=user.status.value,
         )
         await repository.save(user_input)
 

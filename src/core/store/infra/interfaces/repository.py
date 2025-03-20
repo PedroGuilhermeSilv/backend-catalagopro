@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
-from ast import Store
+
+from src.core.store.domain.dtos import StoreListDto
+from src.core.store.domain.entity import Store
 
 
 class StoreRepository(ABC):
@@ -13,4 +15,8 @@ class StoreRepository(ABC):
 
     @abstractmethod
     async def get_by_slug(self, slug: str) -> Store:
+        pass
+
+    @abstractmethod
+    async def list(self) -> list[StoreListDto]:
         pass

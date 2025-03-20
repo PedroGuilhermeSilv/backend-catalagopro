@@ -1,6 +1,7 @@
 import os
 
 import pytest
+from django.test import override_settings
 from ninja.testing import TestAsyncClient
 
 from src.framework.urls import api
@@ -17,40 +18,56 @@ def client():
     return TestAsyncClient(api)
 
 
+@pytest.fixture
+def debug_settings():
+    with override_settings(DEBUG=True):
+        yield
+
+
 @pytest.mark.django_db(transaction=True)
 class TestControllerCreateUser:
     @pytest.mark.asyncio
-    async def test_create_user(self, client):
+    async def test_create_user(self, client, debug_settings):
+        headers = {"Authorization": "Bearer " + "1234567890"}
         body = {
             "email": "testes@hotmail.com",
             "password": "12345678",
+            "name": "test",
+            "role": "ADMIN",
+            "status": "ACTIVE",
         }
 
-        response = await client.post("/user/", json=body)
+        response = await client.post("/user/", json=body, headers=headers)
         assert response.json().get("email") == "testes@hotmail.com"
         assert response.status_code == STATUS_CODE_201
 
     @pytest.mark.asyncio
-    async def test_create_user_already_exist(self):
+    async def test_create_user_already_exist(self, client, debug_settings):
+        headers = {"Authorization": "Bearer " + "1234567890"}
         body = {
             "email": "testes@hotmail.com",
             "password": "12345678",
+            "name": "test",
+            "role": "ADMIN",
+            "status": "ACTIVE",
         }
-        client = TestAsyncClient(api)
-        response = await client.post("/user/", json=body)
+        response = await client.post("/user/", json=body, headers=headers)
         assert response.status_code == STATUS_CODE_201
 
-        response = await client.post("/user/", json=body)
+        response = await client.post("/user/", json=body, headers=headers)
         assert response.status_code == STATUS_CODE_409
         assert response.json().get("message") == "User already exists"
 
     @pytest.mark.asyncio
-    async def test_create_user_invalid_email(self):
+    async def test_create_user_invalid_email(self, client, debug_settings):
+        headers = {"Authorization": "Bearer " + "1234567890"}
         body = {
             "email": "testes",
             "password": "12345678",
+            "name": "test",
+            "role": "ADMIN",
+            "status": "ACTIVE",
         }
-        client = TestAsyncClient(api)
-        response = await client.post("/user/", json=body)
+        response = await client.post("/user/", json=body, headers=headers)
         assert response.status_code == STATUS_CODE_400
         assert response.json().get("message") == "Invalid email"

@@ -1,6 +1,7 @@
-from enum import Enum
 from datetime import time
-from pydantic import BaseModel
+from enum import Enum
+
+from src.core.utils.model import Model
 
 
 class DayOfWeek(Enum):
@@ -17,13 +18,14 @@ class DayOfWeek(Enum):
         for day in cls:
             if day.value == value:
                 return day
-        raise ValueError(f"Invalid day value: {value}")
+        error_message = f"Invalid day value: {value}"
+        raise ValueError(error_message)
 
     def __str__(self) -> str:
         return self.name.title()
 
 
-class BusinessHour(BaseModel):
+class BusinessHour(Model):
     day: DayOfWeek
     open_hour: time
     close_hour: time
@@ -57,11 +59,21 @@ class BusinessHour(BaseModel):
     def model_dump(self, **kwargs):
         """Sobrescreve o método model_dump para formatar os horários"""
         data = super().model_dump(**kwargs)
-        if "open_hour" in data:
+        if "open_hour" in data and data["open_hour"] is not None:
             data["open_hour"] = self.formatted_open_hour
-        if "close_hour" in data:
+        if "close_hour" in data and data["close_hour"] is not None:
             data["close_hour"] = self.formatted_close_hour
-        if "day" in data:
+        if "day" in data and data["day"] is not None:
+            data["day"] = self.day.value
+        return data
+
+    def model_dump_json(self, **kwargs):
+        data = super().model_dump(**kwargs)
+        if "open_hour" in data and data["open_hour"] is not None:
+            data["open_hour"] = self.formatted_open_hour
+        if "close_hour" in data and data["close_hour"] is not None:
+            data["close_hour"] = self.formatted_close_hour
+        if "day" in data and data["day"] is not None:
             data["day"] = self.day.value
         return data
 

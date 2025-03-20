@@ -1,8 +1,8 @@
+from core.user.infra.interfaces.repository import UserRepository
 from src.core.security.application.service.dto.jwt import (
     InputRefreshToken,
     JwtOutPutDto,
 )
-from src.core.user.domain.repository import UserRepository
 from src.core.utils.exceptions.erros import UserNotFoundError
 from src.core.utils.token import create_token, verify_token
 
@@ -12,7 +12,6 @@ class JWTRefresh:
         self.repository = repository
 
     async def execute(self, input: InputRefreshToken) -> JwtOutPutDto:
-
         try:
             payload = verify_token(input.refresh_token)
             user = await self.repository.get_by_email(payload["email"])

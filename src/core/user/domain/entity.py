@@ -1,27 +1,49 @@
 import uuid
 from dataclasses import field
+from enum import Enum
 from typing import Self
 
 from email_validator import validate_email
-from pydantic import BaseModel, ConfigDict, model_validator
+from pydantic import ConfigDict, field_validator, model_validator
 
+from core.utils.enums import Status
 from src.core.user.domain.exceptions import (
     InvalidEmailError,
     InvalidPasswordError,
     InvalidUserError,
 )
 from src.core.utils.hash import get_password_hash
-from typing import Optional
+from src.core.utils.model import Model
 
 LENGTH_PASSWORD = 8
 
 
-class User(BaseModel):
+class UserRole(Enum):
+    ADMIN = "ADMIN"
+    OWNER = "OWNER"
+    EMPLOYEE = "EMPLOYEE"
+
+    @classmethod
+    def from_value(cls, value):
+        if not value:
+            return None
+        for item in cls:
+            if item.value == value:
+                return item
+        return None
+
+    @classmethod
+    def choices(cls):
+        return [(item.value, item.name) for item in cls]
+
+
+class User(Model):
     name: str
     email: str
     password: str
-    role: Optional[str] = None
-    store_slug: Optional[str] = None
+    status: Status
+    role: UserRole | None = None
+    store_slug: str | None = None
     id: uuid.UUID = field(default_factory=uuid.uuid4)
 
     @model_validator(mode="before")
@@ -44,10 +66,53 @@ class User(BaseModel):
         self.password = get_password_hash(self.password)
         return self
 
+    @field_validator("role")
+    @classmethod
+    def validate_role(cls, v):
+        if v is None:
+            return None
+        if isinstance(v, UserRole):
+            return v
+        if isinstance(v, str):
+            try:
+                return UserRole[v]
+            except KeyError:
+                try:
+                    return UserRole(v)
+                except ValueError:
+                    return v
+        return v
+
+    @field_validator("status")
+    @classmethod
+    def validate_status(cls, v):
+        if isinstance(v, Status):
+            return v
+        if isinstance(v, str):
+            try:
+                return Status[v]
+            except KeyError:
+                try:
+                    return Status(v)
+                except ValueError:
+                    return v
+        return v
+
     def __str__(self):
         return f"User: {self.email}, id: {self.id}"
 
     def __repr__(self):
         return f"User: {self.email}, id: {self.id}"
 
-    model_config = ConfigDict(extra="forbid")
+    def model_dump(self, **kwargs):
+        data = super().model_dump(**kwargs)
+        if self.role and hasattr(self.role, "value"):
+            data["role"] = self.role.value
+        if self.status and hasattr(self.status, "value"):
+            data["status"] = self.status.value
+        return data
+
+    model_config = ConfigDict(
+        extra="forbid",
+        use_enum_values=False,
+    )

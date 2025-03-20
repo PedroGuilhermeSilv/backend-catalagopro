@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-%j2fp=o02(+j7g+ry4hu8b9iwa^(%0gdye+2+z*p&#h834_+bd"
 
 
-DEBUG = os.getenv("DEBUG") == "True"
+DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = ["*"]
 
@@ -85,26 +85,32 @@ WSGI_APPLICATION = "src.framework.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    },
+}
 
-DATABASES = (
-    {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        },
-    }
-    if DEBUG
-    else {
-        "default": {
-            "ENGINE": "django_cockroachdb",
-            "NAME": os.getenv("DATABASE_NAME"),
-            "USER": os.getenv("DATABASE_USER"),
-            "PASSWORD": os.getenv("DATABASE_PASSWORD"),
-            "HOST": os.getenv("DATABASE_HOST"),
-            "PORT": os.getenv("DATABASE_PORT"),
-        },
-    }
-)
+# DATABASES = (
+#     {
+#         "default": {
+#             "ENGINE": "django.db.backends.sqlite3",
+#             "NAME": BASE_DIR / "db.sqlite3",
+#         },
+#     }
+#     if DEBUG
+#     else {
+#         "default": {
+#             "ENGINE": "django_cockroachdb",
+#             "NAME": os.getenv("DATABASE_NAME"),
+#             "USER": os.getenv("DATABASE_USER"),
+#             "PASSWORD": os.getenv("DATABASE_PASSWORD"),
+#             "HOST": os.getenv("DATABASE_HOST"),
+#             "PORT": os.getenv("DATABASE_PORT"),
+#         },
+#     }
+# )
 
 
 def monkeypatch_ninja_uuid_converter() -> None:

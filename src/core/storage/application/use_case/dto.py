@@ -1,13 +1,10 @@
-from pydantic import BaseModel
-from typing import Any
 from src.core.utils.file import UploadedFile
+from src.core.utils.model import Model
 
 
-class SaveFileInput(BaseModel):
+class SaveFileInput(Model):
     file: UploadedFile
 
-    model_config = {"arbitrary_types_allowed": True}
 
-
-class SaveFileOutput(BaseModel):
+class SaveFileOutput(Model):
     file_url: str

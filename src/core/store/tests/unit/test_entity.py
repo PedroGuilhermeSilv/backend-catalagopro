@@ -1,8 +1,9 @@
 import uuid
 from datetime import datetime
-from core.store.domain.exceptions import InvalidSlugError
-from src.core.store.domain.entity import Store, BusinessHour
+from zoneinfo import ZoneInfo
+
 import pytest
+from src.core.store.domain.entity import BusinessHour, Store
 
 
 @pytest.fixture
@@ -25,8 +26,8 @@ class TestStoreEntity:
             name=store_name,
             slug=explicit_slug,
             owner_id=str(uuid.uuid4()),
-            created_at=datetime.now().date(),
-            updated_at=datetime.now().date(),
+            created_at=datetime.now(tz=ZoneInfo("UTC")).date(),
+            updated_at=datetime.now(tz=ZoneInfo("UTC")).date(),
             address="Rua Teste, 123",
             whatsapp="1234567890",
             description="Descrição da loja",
@@ -39,7 +40,8 @@ class TestStoreEntity:
         assert store.id == store_id
 
     def test_store_creation_with_automatic_slug_generation(
-        self, business_hour: BusinessHour
+        self,
+        business_hour: BusinessHour,
     ):
         store_id = str(uuid.uuid4())
         store_name = "Minha Loja Teste"
@@ -49,8 +51,8 @@ class TestStoreEntity:
             id=store_id,
             name=store_name,
             owner_id=str(uuid.uuid4()),
-            created_at=datetime.now().date(),
-            updated_at=datetime.now().date(),
+            created_at=datetime.now(tz=ZoneInfo("UTC")).date(),
+            updated_at=datetime.now(tz=ZoneInfo("UTC")).date(),
             address="Rua Teste, 123",
             whatsapp="1234567890",
             description="Descrição da loja",
@@ -63,7 +65,6 @@ class TestStoreEntity:
         assert store.id == store_id
 
     def test_slug_generation_with_special_characters(self, business_hour: BusinessHour):
-
         store_id = str(uuid.uuid4())
         store_name = "Café & Restaurante"
         expected_slug = "cafe-restaurante"
@@ -72,8 +73,8 @@ class TestStoreEntity:
             id=store_id,
             name=store_name,
             owner_id=str(uuid.uuid4()),
-            created_at=datetime.now().date(),
-            updated_at=datetime.now().date(),
+            created_at=datetime.now(tz=ZoneInfo("UTC")).date(),
+            updated_at=datetime.now(tz=ZoneInfo("UTC")).date(),
             address="Rua Teste, 123",
             whatsapp="1234567890",
             description="Descrição da loja",
@@ -84,7 +85,6 @@ class TestStoreEntity:
         assert store.slug == expected_slug
 
     def test_slug_generation_with_multiple_spaces(self, business_hour: BusinessHour):
-
         store_id = str(uuid.uuid4())
         store_name = "Loja  com  Espaços  Múltiplos"
         expected_slug = "loja-com-espacos-multiplos"
@@ -93,8 +93,8 @@ class TestStoreEntity:
             id=store_id,
             name=store_name,
             owner_id=str(uuid.uuid4()),
-            created_at=datetime.now().date(),
-            updated_at=datetime.now().date(),
+            created_at=datetime.now(tz=ZoneInfo("UTC")).date(),
+            updated_at=datetime.now(tz=ZoneInfo("UTC")).date(),
             address="Rua Teste, 123",
             whatsapp="1234567890",
             description="Descrição da loja",
@@ -113,8 +113,8 @@ class TestStoreEntity:
                 id=store_id,
                 name=store_name,
                 owner_id=str(uuid.uuid4()),
-                created_at=datetime.now().date(),
-                updated_at=datetime.now().date(),
+                created_at=datetime.now(tz=ZoneInfo("UTC")).date(),
+                updated_at=datetime.now(tz=ZoneInfo("UTC")).date(),
                 address="Rua Teste, 123",
                 whatsapp="1234567890",
                 description="Descrição da loja",

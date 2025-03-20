@@ -1,5 +1,7 @@
-from django.db import models
 from uuid import uuid4
+
+from django.db import models
+from src.core.store.domain.entity import StoreStatus
 from src.core.user.infra.database.models import User
 
 
@@ -15,6 +17,11 @@ class Store(models.Model):
     address = models.TextField()
     whatsapp = models.CharField(max_length=255)
     business_hours = models.JSONField()
+    status = models.CharField(
+        max_length=255,
+        choices=StoreStatus.choices,
+        default=StoreStatus.ACTIVE,
+    )
 
     def __str__(self):
         return self.name

@@ -1,5 +1,5 @@
 from src.core.security.application.service.dto.jwt import InputAuthUserDto, JwtOutPutDto
-from src.core.user.domain.repository import UserRepository
+from src.core.user.infra.interfaces.repository import UserRepository
 from src.core.utils.exceptions.erros import InvalidPasswordError, UserNotFoundError
 from src.core.utils.hash import verify_password
 from src.core.utils.token import create_refresh_token, create_token
@@ -20,7 +20,7 @@ class JWTCreator:
             payload = {
                 "email": user.email,
                 "tenant": user.store_slug if user.store_slug else None,
-                "role": user.role if user.role else None,
+                "role": user.role.value if user.role else None,
             }
             token = create_token(payload, expires_in=60)
             refresh_token = create_refresh_token(payload)

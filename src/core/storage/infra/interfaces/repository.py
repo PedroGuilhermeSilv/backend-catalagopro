@@ -1,10 +1,11 @@
-from abc import abstractmethod
-from pydantic import BaseModel
 import os
+from abc import abstractmethod
 from typing import Any
 
+from src.core.utils.model import Model
 
-class StorageRepository(BaseModel):
+
+class StorageRepository(Model):
     service_name: str = os.environ.get("SERVICE_NAME", "s3")
     endpoint_url: str = os.environ.get("ENDPOINT_URL")
     aws_access_key_id: str = os.environ.get("AWS_ACCESS_KEY_ID")
@@ -15,7 +16,5 @@ class StorageRepository(BaseModel):
         raise NotImplementedError
 
     @abstractmethod
-    def save_file(self, file: Any) -> str:
+    def save_file(self, file: Any, file_name: str) -> str:
         raise NotImplementedError
-
-    model_config = {"arbitrary_types_allowed": True}

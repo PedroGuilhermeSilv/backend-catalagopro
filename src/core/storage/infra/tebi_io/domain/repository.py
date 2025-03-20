@@ -1,10 +1,12 @@
-from src.core.storage.domain.repository import StorageRepository
-from src.core.utils.file import UploadedFile
+import os
 import warnings
+
+import boto3
 import urllib3
 from botocore.config import Config
-import boto3
-import os
+from src.core.utils.file import UploadedFile
+
+from core.storage.infra.interfaces.repository import StorageRepository
 
 
 class TebiIOStorageRepository(StorageRepository):
@@ -28,16 +30,17 @@ class TebiIOStorageRepository(StorageRepository):
             region_name="us-east-1",
         )
 
-    def save_file(self, file: UploadedFile) -> str:
+    def save_file(self, file: UploadedFile, file_name: str) -> str:
         # Suprime o aviso de SSL não verificado
         warnings.filterwarnings(
-            "ignore", category=urllib3.exceptions.InsecureRequestWarning
+            "ignore",
+            category=urllib3.exceptions.InsecureRequestWarning,
         )
 
         # Salva o arquivo no bucket
         self.connection().put_object(
             Bucket=self.bucket_name,
-            Key=file.name,
+            Key=file_name,
             Body=file.content,
             ContentType=file.content_type,
             ACL="public-read",
@@ -45,4 +48,4 @@ class TebiIOStorageRepository(StorageRepository):
 
         # Retorna a URL pública do arquivo
         # O formato da URL do Tebi.io é diferente do S3 padrão
-        return f"{self.endpoint_url}/{self.bucket_name}/{file.name}"
+        return f"{self.endpoint_url}/{self.bucket_name}/{file_name}"

@@ -1,11 +1,5 @@
 from ninja import Router
 
-from src.core.security.application.use_cases.create_token import JWTCreator
-from src.core.security.application.service.dto.jwt import (
-    InputAuthUserDto,
-    InputRefreshToken,
-)
-from src.core.security.application.service.security_service import SecurityService
 from core.security.infra.api.controller.schemas import (
     InputRefreshTokenDto,
     LoginInputDto,
@@ -13,6 +7,11 @@ from core.security.infra.api.controller.schemas import (
     response,
 )
 from core.user.infra.database.repository import DjangoUserRepository
+from src.core.security.application.service.dto.jwt import (
+    InputAuthUserDto,
+    InputRefreshToken,
+)
+from src.core.security.application.service.security_service import SecurityService
 
 router = Router(tags=["Auth"])
 

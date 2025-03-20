@@ -1,5 +1,6 @@
 from src.core.store.domain.entity import Store
-from src.core.store.domain.repository import StoreRepository
+
+from core.store.infra.interfaces.repository import StoreRepository
 
 
 class CreateStoreUseCase:

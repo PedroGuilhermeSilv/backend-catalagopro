@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserM
 from django.db import models
 
 from src.core.user.infra.api.controllers.exceptions import InvalidEmail
+from src.core.utils.enums import Status
 
 
 class CustomUserManager(UserManager):
@@ -58,6 +59,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(blank=True, null=True)
+
+    status = models.CharField(
+        max_length=255,
+        choices=Status.choices(),
+        default=Status.ACTIVE,
+    )
 
     objects = CustomUserManager()
 
