@@ -1,18 +1,18 @@
-import os
+import io
 import json
+import os
+
 import pytest
 import pytest_asyncio
-from django.test import override_settings, Client
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import Client, override_settings
+from django.test.client import BOUNDARY, encode_multipart
 from ninja.testing import TestAsyncClient
+from PIL import Image
 from src.core.user.domain.entity import User
 from src.core.user.infra.database.repository import DjangoUserRepository
 from src.core.utils.date import DayOfWeek
 from src.framework.urls import api
-from PIL import Image
-import io
-from django.test.client import encode_multipart, BOUNDARY
-from PIL import ImageDraw
 
 os.environ["NINJA_SKIP_REGISTRY"] = "yes"
 
@@ -63,7 +63,9 @@ class TestControllerCreateStores:
         image_bytes = image_io.getvalue()
 
         test_file = SimpleUploadedFile(
-            name="image.png", content=image_bytes, content_type="image/png"
+            name="image.png",
+            content=image_bytes,
+            content_type="image/png",
         )
         test_file.seek(0)
 
@@ -74,8 +76,8 @@ class TestControllerCreateStores:
                     "day": DayOfWeek.MONDAY.value,
                     "open_hour": "09:00",
                     "close_hour": "18:00",
-                }
-            ]
+                },
+            ],
         )
 
         # Preparar os dados para o request

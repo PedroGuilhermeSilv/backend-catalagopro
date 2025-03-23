@@ -31,7 +31,6 @@ class TebiIOStorageRepository(StorageRepository):
         )
 
     def save_file(self, file: UploadedFile, file_name: str) -> str:
-
         warnings.filterwarnings(
             "ignore",
             category=urllib3.exceptions.InsecureRequestWarning,

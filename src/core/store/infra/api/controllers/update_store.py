@@ -1,8 +1,8 @@
 import json
 import re
-from ninja import File, Form, Path
+
+from ninja import File, Form
 from ninja.files import UploadedFile
-from core.storage.infra.tebi_io.tebi_io_repository import TebiIOStorageRepository
 from src.core.store.application.services.dtos import InputServiceUpdateStore
 from src.core.store.application.services.store_service import StoreService
 from src.core.store.domain.entity import StoreStatus
@@ -10,7 +10,8 @@ from src.core.store.infra.api.controllers.dtos import StoreUpdateDto
 from src.core.store.infra.database.repository import DjangoStoreRepository
 from src.core.user.infra.database.repository import DjangoUserRepository
 from src.core.utils.file import UploadedFile as DomainUploadedFile
-from src.core.utils.date import DayOfWeek, BusinessHour
+
+from core.storage.infra.tebi_io.tebi_io_repository import TebiIOStorageRepository
 
 
 def parse_multipart_form_data(request):
@@ -48,7 +49,8 @@ def extract_form_values(form_data, **defaults):
 
     # Campo business_hours (requer parsing JSON)
     business_hours_val = form_data.get(
-        "business_hours", defaults.get("business_hours") or "[]"
+        "business_hours",
+        defaults.get("business_hours") or "[]",
     )
     try:
         values["business_hours"] = (

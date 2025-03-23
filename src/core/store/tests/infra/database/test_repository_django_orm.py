@@ -3,19 +3,15 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 import pytest
-from core.store.domain.exceptions import StoreNotFoundError
-from core.user.domain.exceptions import UserNotFoundError
 from src.core.store.domain.entity import BusinessHour, Store
-from src.core.store.infra.database.models import (
-    Store as StoreModel,
-)
+from src.core.store.domain.exceptions import StoreNotFoundError
 from src.core.store.infra.database.repository import DjangoStoreRepository
 from src.core.user.domain.entity import User, UserRole
 from src.core.user.infra.database.models import User as UserModel
 from src.core.utils.date import DayOfWeek
 from src.core.utils.enums import Status
 
-pytestmark = pytest.mark.django_db  # Marca todos os testes para usar o banco de dados
+pytestmark = pytest.mark.django_db
 
 
 @pytest.fixture

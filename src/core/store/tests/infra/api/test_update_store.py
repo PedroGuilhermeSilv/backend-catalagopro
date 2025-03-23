@@ -1,12 +1,15 @@
-import os
-import json
 import io
-from PIL import Image, ImageDraw
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import override_settings
-from ninja.testing import TestAsyncClient
+import json
+import os
+import uuid
+
 import pytest
 import pytest_asyncio
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import Client, override_settings
+from django.test.client import BOUNDARY, encode_multipart
+from ninja.testing import TestAsyncClient
+from PIL import Image, ImageDraw
 from src.core.store.application.use_case.create_store import CreateStoreUseCase
 from src.core.store.domain.entity import Store
 from src.core.store.infra.database.repository import DjangoStoreRepository
@@ -14,14 +17,12 @@ from src.core.user.domain.entity import User
 from src.core.user.infra.database.repository import DjangoUserRepository
 from src.core.utils.date import BusinessHour, DayOfWeek
 from src.framework.urls import api
-from django.test.client import encode_multipart, BOUNDARY
-from django.test import Client
-import uuid
 
 os.environ["NINJA_SKIP_REGISTRY"] = "yes"
 
 STATUS_CODE_200 = 200
 STATUS_CODE_401 = 401
+STATUS_CODE_201 = 201
 
 
 @pytest_asyncio.fixture
@@ -77,7 +78,6 @@ def debug_settings():
 
 @pytest.mark.django_db(transaction=True)
 class TestControllerUpdateStore:
-
     @pytest.mark.django_db
     def test_update_store_sync(self, debug_settings, create_store):
         client = Client()
@@ -95,7 +95,9 @@ class TestControllerUpdateStore:
         image_bytes = image_io.getvalue()
 
         test_file = SimpleUploadedFile(
-            name="new_image.png", content=image_bytes, content_type="image/png"
+            name="new_image.png",
+            content=image_bytes,
+            content_type="image/png",
         )
         test_file.seek(0)
 
@@ -111,7 +113,7 @@ class TestControllerUpdateStore:
                     "open_hour": "09:00",
                     "close_hour": "18:00",
                 },
-            ]
+            ],
         )
 
         data = {
@@ -131,7 +133,7 @@ class TestControllerUpdateStore:
             HTTP_AUTHORIZATION="Bearer 1234567890",
         )
 
-        assert response.status_code == 201
+        assert response.status_code == STATUS_CODE_201
 
         response_json = response.json()
 

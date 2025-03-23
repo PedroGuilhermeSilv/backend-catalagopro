@@ -8,8 +8,8 @@ from src.core.storage.infra.in_memory.in_memory_storage_repository import (
     InMemoryStorageRepository,
 )
 from src.core.store.application.services.store_service import (
-    StoreService,
     InputServiceUpdateStore,
+    StoreService,
 )
 from src.core.store.domain.entity import Store
 from src.core.store.infra.in_memory.in_memory_store_repository import (
@@ -96,7 +96,7 @@ class TestUpdateStore:
             input=InputServiceUpdateStore(
                 store_id=store_on_db.id,
                 name="Loja Teste Atualizada",
-            )
+            ),
         )
         assert store.id == store_on_db.id
         assert store.name == "Loja Teste Atualizada"
