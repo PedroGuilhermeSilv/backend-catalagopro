@@ -21,6 +21,18 @@ class BusinessHourDto(Schema):
     close_hour: str
 
 
+class StoreUpdateDto(Schema):
+    name: str | None = None
+    slug: str | None = None
+    logo_url: str | None = None
+    description: str | None = None
+    address: str | None = None
+    whatsapp: str | None = None
+    business_hours: list[BusinessHourCreateDto] | None = None
+    status: StoreStatus | None = None
+    owner_id: str | None = None
+
+
 class StoreCreateOutputDto(Schema):
     id: str
     name: str
@@ -67,3 +79,11 @@ response_store_create[201] = StoreCreateOutputDto
 
 response_store_list = response.copy()
 response_store_list[200] = StoreListOutputDto
+
+
+response_store_update = response.copy()
+response_store_update[201] = StoreUpdateDto
+
+
+response_store_delete = response.copy()
+response_store_delete[204] = None

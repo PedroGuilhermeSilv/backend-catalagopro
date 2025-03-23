@@ -3,6 +3,8 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 import pytest
+from core.store.domain.exceptions import StoreNotFoundError
+from core.user.domain.exceptions import UserNotFoundError
 from src.core.store.domain.entity import BusinessHour, Store
 from src.core.store.infra.database.models import (
     Store as StoreModel,
@@ -116,7 +118,7 @@ class TestDjangoStoreRepository:
         repository = DjangoStoreRepository()
 
         # Act & Assert
-        with pytest.raises(StoreModel.DoesNotExist):
+        with pytest.raises(StoreNotFoundError):
             await repository.get_by_id(str(uuid.uuid4()))
 
     @pytest.mark.asyncio
@@ -147,3 +149,40 @@ class TestDjangoStoreRepository:
         assert stores[0].business_hours == store.business_hours
         assert stores[0].created_at == store.created_at
         assert stores[0].updated_at == store.updated_at
+
+    @pytest.mark.asyncio
+    async def test_update_store(self, store: Store):
+        """Deve atualizar uma loja"""
+        repository = DjangoStoreRepository()
+        await repository.save(store)
+        store_on_db = await repository.get_by_id(str(store.id))
+        assert store_on_db is not None
+
+        store.name = "Loja Teste Atualizada"
+        updated_store = await repository.update(store)
+
+        assert updated_store.id == store.id
+        assert updated_store.name == "Loja Teste Atualizada"
+
+    @pytest.mark.asyncio
+    async def test_update_store_not_found(self, store: Store):
+        """Deve lançar exceção quando a loja não for encontrada"""
+        repository = DjangoStoreRepository()
+        with pytest.raises(StoreNotFoundError):
+            await repository.update(store)
+
+    @pytest.mark.asyncio
+    async def test_delete_store_not_found(self):
+        """Deve lançar exceção quando a loja não for encontrada"""
+        repository = DjangoStoreRepository()
+        with pytest.raises(StoreNotFoundError):
+            await repository.delete(str(uuid.uuid4()))
+
+    @pytest.mark.asyncio
+    async def test_delete_store(self, store: Store):
+        """Deve deletar uma loja"""
+        repository = DjangoStoreRepository()
+        await repository.save(store)
+        assert len(await repository.list()) == 1
+        await repository.delete(store.id)
+        assert len(await repository.list()) == 0

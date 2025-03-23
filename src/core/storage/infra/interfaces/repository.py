@@ -18,3 +18,6 @@ class StorageRepository(Model):
     @abstractmethod
     def save_file(self, file: Any, file_name: str) -> str:
         raise NotImplementedError
+
+    def update_file(self, file: Any, file_name: str) -> str:
+        raise NotImplementedError

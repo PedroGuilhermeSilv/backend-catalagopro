@@ -6,7 +6,7 @@ from src.core.utils.file import UploadedFile
 from src.core.utils.model import Model
 
 
-class BusinessHourCreateDto(Model):
+class BusinessHour(Model):
     day: DayOfWeek
     open_hour: str
     close_hour: str
@@ -19,8 +19,21 @@ class InputServiceCreateStore(Model):
     address: str
     status: StoreStatus
     whatsapp: str
-    business_hours: list[BusinessHourCreateDto]
+    business_hours: list[BusinessHour]
     image: UploadedFile | None = None
+
+
+class InputServiceUpdateStore(Model):
+    store_id: str
+    name: str | None = None
+    slug: str | None = None
+    image: UploadedFile | None = None
+    description: str | None = None
+    address: str | None = None
+    whatsapp: str | None = None
+    business_hours: list[BusinessHour] | None = None
+    status: StoreStatus | None = None
+    owner_id: str | None = None
 
 
 class StoreDto(Model):
@@ -34,7 +47,7 @@ class StoreDto(Model):
     description: str
     address: str
     whatsapp: str
-    business_hours: list[BusinessHourCreateDto]
+    business_hours: list[BusinessHour]
     owner_id: str
     owner_name: str
 

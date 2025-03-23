@@ -20,3 +20,11 @@ class StoreRepository(ABC):
     @abstractmethod
     async def list(self) -> list[StoreListDto]:
         pass
+
+    @abstractmethod
+    async def update(self, store: Store) -> Store:
+        pass
+
+    @abstractmethod
+    async def delete(self, id: str) -> None:
+        pass

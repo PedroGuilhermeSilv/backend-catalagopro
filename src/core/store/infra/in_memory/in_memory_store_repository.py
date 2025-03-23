@@ -1,6 +1,7 @@
 from src.core.store.domain.dtos import StoreListDto
 from src.core.store.domain.entity import Store
 
+from core.store.domain.exceptions import StoreNotFoundError
 from core.store.infra.interfaces.repository import StoreRepository
 
 
@@ -36,3 +37,13 @@ class InMemoryStoreRepository(StoreRepository):
             )
             for store in self.stores
         ]
+
+    async def update(self, store: Store) -> Store:
+        for index, value in enumerate(self.stores):
+            if value.id == store.id:
+                self.stores[index] = store
+                return store
+        raise StoreNotFoundError
+
+    async def delete(self, id: str) -> None:
+        self.stores = [store for store in self.stores if store.id != id]

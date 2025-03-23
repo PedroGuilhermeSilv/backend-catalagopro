@@ -2,7 +2,6 @@ import json
 
 from ninja import File, Form
 from ninja.files import UploadedFile
-from src.core.storage.infra.tebi_io.domain.repository import TebiIOStorageRepository
 from src.core.store.application.services.dtos import InputServiceCreateStore
 from src.core.store.application.services.store_service import StoreService
 from src.core.store.domain.entity import StoreStatus
@@ -12,6 +11,8 @@ from src.core.store.infra.api.controllers.dtos import (
 from src.core.store.infra.database.repository import DjangoStoreRepository
 from src.core.user.infra.database.repository import DjangoUserRepository
 from src.core.utils.file import UploadedFile as DomainUploadedFile
+
+from core.storage.infra.tebi_io.tebi_io_repository import TebiIOStorageRepository
 
 
 async def create(

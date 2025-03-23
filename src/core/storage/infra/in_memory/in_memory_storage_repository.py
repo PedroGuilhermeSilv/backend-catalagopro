@@ -9,3 +9,6 @@ class InMemoryStorageRepository(StorageRepository):
 
     def save_file(self, file: UploadedFile, file_name: str) -> str:
         return f"https://{file_name}"
+
+    def update_file(self, file: UploadedFile, file_name: str) -> str:
+        return f"https://{file_name}"

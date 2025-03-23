@@ -31,13 +31,12 @@ class TebiIOStorageRepository(StorageRepository):
         )
 
     def save_file(self, file: UploadedFile, file_name: str) -> str:
-        # Suprime o aviso de SSL não verificado
+
         warnings.filterwarnings(
             "ignore",
             category=urllib3.exceptions.InsecureRequestWarning,
         )
 
-        # Salva o arquivo no bucket
         self.connection().put_object(
             Bucket=self.bucket_name,
             Key=file_name,
@@ -46,6 +45,11 @@ class TebiIOStorageRepository(StorageRepository):
             ACL="public-read",
         )
 
-        # Retorna a URL pública do arquivo
-        # O formato da URL do Tebi.io é diferente do S3 padrão
         return f"{self.endpoint_url}/{self.bucket_name}/{file_name}"
+
+    def delete_file(self, file_name: str) -> None:
+        self.connection().delete_object(Bucket=self.bucket_name, Key=file_name)
+
+    def update_file(self, file: UploadedFile, file_name: str) -> str:
+        self.delete_file(file_name)
+        return self.save_file(file, file_name)

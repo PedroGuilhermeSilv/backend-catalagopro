@@ -1,20 +1,23 @@
 from src.core.storage.application.use_case.dto import SaveFileInput
 from src.core.storage.application.use_case.save_file import SaveFile
+from src.core.storage.infra.interfaces.repository import StorageRepository
 from src.core.store.application.services.dtos import (
-    BusinessHourCreateDto,
     InputServiceCreateStore,
+    InputServiceUpdateStore,
     OutputServiceListStore,
 )
 from src.core.store.application.use_case.create_store import CreateStoreUseCase
 from src.core.store.application.use_case.list_store import ListStoreUseCase
 from src.core.store.domain.entity import Store
+from src.core.store.infra.interfaces.repository import StoreRepository
 from src.core.user.application.use_case.get_user_by_email import GetUserByEmail
+from src.core.user.application.use_case.get_user_by_id import GetUserById
+from src.core.user.infra.interfaces.repository import UserRepository
 from src.core.utils.date import BusinessHour
 
-from core.storage.infra.interfaces.repository import StorageRepository
-from core.store.infra.interfaces.repository import StoreRepository
-from core.user.application.use_case.get_user_by_id import GetUserById
-from core.user.infra.interfaces.repository import UserRepository
+from core.store.application.use_case.delete_store import DeleteStoreUseCase
+from core.store.application.use_case.get_store_by_id import GetStoreByIdUseCase
+from core.store.application.use_case.update_store import UpdateStoreUseCase
 
 
 class StoreService:
@@ -24,46 +27,48 @@ class StoreService:
         storage_repository: StorageRepository,
         user_repository: UserRepository,
     ):
-        self.save_store = CreateStoreUseCase(store_repository)
-        self.save_file = SaveFile(storage_repository)
-        self.get_user_by_email = GetUserByEmail(user_repository)
-        self.get_all_stores = ListStoreUseCase(store_repository)
-        self.get_user_by_id = GetUserById(user_repository)
+        self.uc_save_store = CreateStoreUseCase(store_repository)
+        self.uc_save_file = SaveFile(storage_repository)
+        self.uc_get_user_by_email = GetUserByEmail(user_repository)
+        self.uc_get_all_stores = ListStoreUseCase(store_repository)
+        self.uc_get_user_by_id = GetUserById(user_repository)
+        self.uc_get_store_by_id = GetStoreByIdUseCase(store_repository)
+        self.uc_update_store = UpdateStoreUseCase(store_repository)
+        self.uc_delete_store = DeleteStoreUseCase(store_repository)
 
     async def create_store(self, input: InputServiceCreateStore) -> Store:
         try:
-            user = await self.get_user_by_email.execute(input.email_owner)
+            user = await self.uc_get_user_by_email.execute(input.email_owner)
+            store = Store(
+                name=input.name,
+                owner_id=str(user.id),
+                logo_url="",
+                description=input.description,
+                address=input.address,
+                whatsapp=input.whatsapp,
+                status=input.status,
+                business_hours=[
+                    BusinessHour(
+                        day=hour.day.value,
+                        open_hour=hour.open_hour,
+                        close_hour=hour.close_hour,
+                    )
+                    for hour in input.business_hours
+                ],
+            )
 
-            file_output = self.save_file.execute(
+            file_output = self.uc_save_file.execute(
                 SaveFileInput(file=input.image),
-                str(user.id),
+                str(store.id),
             )
-            file_url = file_output.file_url
+            store.logo_url = file_output.file_url
 
-            return await self.save_store.execute(
-                Store(
-                    name=input.name,
-                    owner_id=str(user.id),
-                    logo_url=file_url,
-                    description=input.description,
-                    address=input.address,
-                    whatsapp=input.whatsapp,
-                    status=input.status,
-                    business_hours=[
-                        BusinessHour(
-                            day=hour.day.value,
-                            open_hour=hour.open_hour,
-                            close_hour=hour.close_hour,
-                        )
-                        for hour in input.business_hours
-                    ],
-                ),
-            )
+            return await self.uc_save_store.execute(store)
         except Exception as e:
             raise e
 
     async def list_stores(self) -> OutputServiceListStore:
-        stores = await self.get_all_stores.execute()
+        stores = await self.uc_get_all_stores.execute()
         return OutputServiceListStore(
             data=[
                 {
@@ -78,18 +83,65 @@ class StoreService:
                     "address": store.address,
                     "whatsapp": store.whatsapp,
                     "business_hours": [
-                        BusinessHourCreateDto(
-                            day=hour.day.value,
-                            open_hour=hour.formatted_open_hour,
-                            close_hour=hour.formatted_close_hour,
-                        )
+                        {
+                            "day": hour.day.value,
+                            "open_hour": hour.formatted_open_hour,
+                            "close_hour": hour.formatted_close_hour,
+                        }
                         for hour in store.business_hours
                     ],
                     "owner_id": store.owner_id,
                     "owner_name": (
-                        await self.get_user_by_id.execute(store.owner_id)
+                        await self.uc_get_user_by_id.execute(store.owner_id)
                     ).name,
                 }
                 for store in stores
             ],
         )
+
+    async def update_store(self, input: InputServiceUpdateStore) -> Store:
+        try:
+            store_on_db = await self.uc_get_store_by_id.execute(input.store_id)
+            if input.image:
+                store_on_db.logo_url = self.storage_repository.update_file(
+                    SaveFileInput(file=input.image),
+                    str(store_on_db.id),
+                )
+            if input.owner_id:
+                owner = await self.uc_get_user_by_id.execute(input.owner_id)
+                store_on_db.owner_id = str(owner.id)
+
+            store = Store(
+                id=input.store_id if input.store_id else store_on_db.id,
+                name=input.name if input.name else store_on_db.name,
+                slug=input.slug if input.slug else store_on_db.slug,
+                logo_url=store_on_db.logo_url,
+                description=(
+                    input.description if input.description else store_on_db.description
+                ),
+                address=input.address if input.address else store_on_db.address,
+                whatsapp=input.whatsapp if input.whatsapp else store_on_db.whatsapp,
+                business_hours=(
+                    [
+                        BusinessHour(
+                            day=hour.day.value,
+                            open_hour=hour.open_hour,
+                            close_hour=hour.close_hour,
+                        )
+                        for hour in input.business_hours
+                    ]
+                    if input.business_hours
+                    else store_on_db.business_hours
+                ),
+                status=input.status if input.status else store_on_db.status,
+                owner_id=store_on_db.owner_id,
+            )
+            return await self.uc_update_store.execute(store)
+        except Exception as e:
+            raise e
+
+    async def delete_store(self, store_id: str) -> None:
+        try:
+            await self.uc_delete_store.execute(store_id)
+        except Exception as e:
+            raise e

@@ -11,6 +11,7 @@ from src.core.user.application.use_case.delete_user import DeleteUser
 from src.core.user.application.use_case.get_user_by_email import GetUserByEmail
 from src.core.user.application.use_case.list_users import UseCaseListUsers
 from src.core.user.application.use_case.update_user import UserInput
+from src.core.user.domain.dto import UserOutput
 from src.core.user.domain.exceptions import UserNotFoundError
 
 
@@ -27,10 +28,10 @@ class UserService:
     async def create_user(self, input: InputServiceCreateUser):
         return await self.create_user_use_case.execute(input)
 
-    async def list_users(self):
+    async def list_users(self) -> list[UserOutput]:
         return await self.list_users_use_case.execute()
 
-    async def delete_user(self, input: InputDeleteUser):
+    async def delete_user(self, input: InputDeleteUser) -> None:
         return await self.delete_user_use_case.execute(input.id)
 
     async def update_user(self, input: InputUpdateUser):

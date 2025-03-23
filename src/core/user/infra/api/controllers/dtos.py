@@ -1,3 +1,5 @@
+import uuid
+
 from ninja import Schema
 from pydantic import field_validator
 
@@ -62,7 +64,7 @@ class UserOutputDto(Schema):
     role: str
     name: str
     store_slug: str | None = None
-    id: str
+    id: uuid.UUID
     status: str
 
     @field_validator("role")
