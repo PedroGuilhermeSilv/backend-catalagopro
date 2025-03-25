@@ -1,6 +1,5 @@
 from src.core.store.domain.dtos import StoreListDto
-
-from core.store.infra.interfaces.repository import StoreRepository
+from src.core.store.infra.interfaces.repository import StoreRepository
 
 
 class ListStoreUseCase:

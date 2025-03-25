@@ -1,4 +1,4 @@
-from core.user.infra.interfaces.repository import UserOutput, UserRepository
+from src.core.user.infra.interfaces.repository import UserOutput, UserRepository
 
 
 class UseCaseListUsers:

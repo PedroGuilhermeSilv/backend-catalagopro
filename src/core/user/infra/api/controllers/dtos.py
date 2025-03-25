@@ -3,7 +3,7 @@ import uuid
 from ninja import Schema
 from pydantic import field_validator
 
-from core.utils.enums import Status
+from src.core.shared.enums import Status
 from src.core.user.domain.entity import UserRole
 
 

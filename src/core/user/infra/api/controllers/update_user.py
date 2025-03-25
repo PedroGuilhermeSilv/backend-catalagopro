@@ -1,8 +1,8 @@
-from core.user.infra.api.controllers.dtos import (
-    UserUpdateInputDto,
-)
 from src.core.user.application.service.dto import InputUpdateUser
 from src.core.user.application.service.user_service import UserService
+from src.core.user.infra.api.controllers.dtos import (
+    UserUpdateInputDto,
+)
 from src.core.user.infra.database.repository import (
     DjangoUserRepository,
 )

@@ -6,10 +6,10 @@ from django.test import override_settings
 from ninja.testing import TestAsyncClient
 from src.core.store.application.use_case.create_store import CreateStoreUseCase
 from src.core.store.domain.entity import Store
+from src.core.store.domain.enums import BusinessHour, DayOfWeek
 from src.core.store.infra.database.repository import DjangoStoreRepository
 from src.core.user.domain.entity import User
 from src.core.user.infra.database.repository import DjangoUserRepository
-from src.core.utils.date import BusinessHour, DayOfWeek
 from src.framework.urls import api
 
 os.environ["NINJA_SKIP_REGISTRY"] = "yes"
@@ -86,7 +86,6 @@ class TestControllerListStores:
 
         response_json = response.json()
         assert len(response_json["data"]) == 1  # type: ignore
-
         assert response_json == {
             "data": [
                 {

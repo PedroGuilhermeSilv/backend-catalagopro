@@ -1,17 +1,17 @@
 from ninja import Router
 
-from core.security.infra.api.controller.schemas import (
-    InputRefreshTokenDto,
-    LoginInputDto,
-    LoginOutputDto,
-    response,
-)
-from core.user.infra.database.repository import DjangoUserRepository
 from src.core.security.application.service.dto.jwt import (
     InputAuthUserDto,
     InputRefreshToken,
 )
 from src.core.security.application.service.security_service import SecurityService
+from src.core.security.infra.api.controller.schemas import (
+    InputRefreshTokenDto,
+    LoginInputDto,
+    LoginOutputDto,
+    response,
+)
+from src.core.user.infra.database.repository import DjangoUserRepository
 
 router = Router(tags=["Auth"])
 

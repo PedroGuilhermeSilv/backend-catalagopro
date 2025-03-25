@@ -3,15 +3,14 @@ import re
 
 from ninja import File, Form
 from ninja.files import UploadedFile
+from src.core.shared.file import UploadedFile as DomainUploadedFile
+from src.core.storage.infra.tebi_io.tebi_io_repository import TebiIOStorageRepository
 from src.core.store.application.services.dtos import InputServiceUpdateStore
 from src.core.store.application.services.store_service import StoreService
-from src.core.store.domain.entity import StoreStatus
+from src.core.store.domain.entity import Status
 from src.core.store.infra.api.controllers.dtos import StoreUpdateDto
 from src.core.store.infra.database.repository import DjangoStoreRepository
 from src.core.user.infra.database.repository import DjangoUserRepository
-from src.core.utils.file import UploadedFile as DomainUploadedFile
-
-from core.storage.infra.tebi_io.tebi_io_repository import TebiIOStorageRepository
 
 
 def parse_multipart_form_data(request):
@@ -61,7 +60,7 @@ def extract_form_values(form_data, **defaults):
 
     # Campo status (requer conversão para enum)
     status_str = form_data.get("status")
-    values["status"] = StoreStatus(status_str) if status_str else defaults.get("status")
+    values["status"] = Status(status_str) if status_str else defaults.get("status")
 
     # Campo image (será tratado separadamente)
 
@@ -95,7 +94,7 @@ async def update(
     address: str | None = Form(None),
     whatsapp: str | None = Form(None),
     business_hours: str | None = Form(None),
-    status: StoreStatus | None = Form(None),
+    status: Status | None = Form(None),
     owner_id: str | None = Form(None),
 ):
     try:

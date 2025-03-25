@@ -1,7 +1,7 @@
-from core.user.infra.interfaces.repository import UserRepository
 from src.core.user.domain.dto import UserInput, UserOutput
 from src.core.user.domain.entity import User
 from src.core.user.domain.exceptions import UserNotFoundError
+from src.core.user.infra.interfaces.repository import UserRepository
 
 
 class InMemoryUserRepository(UserRepository):

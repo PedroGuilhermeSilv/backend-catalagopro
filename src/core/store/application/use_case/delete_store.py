@@ -1,4 +1,4 @@
-from core.store.infra.interfaces.repository import StoreRepository
+from src.core.store.infra.interfaces.repository import StoreRepository
 
 
 class DeleteStoreUseCase:

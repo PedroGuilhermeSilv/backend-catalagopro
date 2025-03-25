@@ -2,10 +2,10 @@ import pytest
 
 from src.core.security.application.service.dto.jwt import InputAuthUserDto
 from src.core.security.application.use_cases.create_token import JWTCreator
+from src.core.shared.token import decode_jwt
 from src.core.user.domain.dto import UserInput
 from src.core.user.domain.entity import User
 from src.core.user.infra.in_memory.in_memory_user import InMemoryUserRepository
-from src.core.utils.token import decode_jwt
 
 EXP = 60
 

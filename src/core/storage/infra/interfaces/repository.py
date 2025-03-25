@@ -2,7 +2,7 @@ import os
 from abc import abstractmethod
 from typing import Any
 
-from src.core.utils.model import Model
+from src.core.shared.model import Model
 
 
 class StorageRepository(Model):

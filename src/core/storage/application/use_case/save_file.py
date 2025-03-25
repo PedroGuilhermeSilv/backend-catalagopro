@@ -1,6 +1,5 @@
 from src.core.storage.application.use_case.dto import SaveFileInput, SaveFileOutput
-
-from core.storage.infra.interfaces.repository import StorageRepository
+from src.core.storage.infra.interfaces.repository import StorageRepository
 
 
 class SaveFile:

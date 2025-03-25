@@ -4,7 +4,7 @@ import pytest
 import pytest_asyncio
 from ninja.testing import TestAsyncClient
 
-from core.user.domain.entity import User
+from src.core.user.domain.entity import User
 from src.core.user.infra.database.repository import DjangoUserRepository
 from src.framework.urls import api
 

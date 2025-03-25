@@ -1,6 +1,3 @@
-from core.user.application.use_case.get_user_by_id import GetUserById
-from core.user.application.use_case.update_user import UpdateUser
-from core.user.infra.interfaces.repository import UserRepository
 from src.core.user.application.service.dto import (
     InputDeleteUser,
     InputServiceCreateUser,
@@ -9,10 +6,12 @@ from src.core.user.application.service.dto import (
 from src.core.user.application.use_case.create_user import CreateUser
 from src.core.user.application.use_case.delete_user import DeleteUser
 from src.core.user.application.use_case.get_user_by_email import GetUserByEmail
+from src.core.user.application.use_case.get_user_by_id import GetUserById
 from src.core.user.application.use_case.list_users import UseCaseListUsers
-from src.core.user.application.use_case.update_user import UserInput
+from src.core.user.application.use_case.update_user import UpdateUser, UserInput
 from src.core.user.domain.dto import UserOutput
 from src.core.user.domain.exceptions import UserNotFoundError
+from src.core.user.infra.interfaces.repository import UserRepository
 
 
 class UserService:

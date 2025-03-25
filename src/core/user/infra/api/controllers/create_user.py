@@ -1,10 +1,10 @@
-from core.user.application.use_case.create_user import (
+from src.core.user.application.service.user_service import UserService
+from src.core.user.application.use_case.create_user import (
     InputServiceCreateUser,
 )
-from core.user.infra.api.controllers.dtos import (
+from src.core.user.infra.api.controllers.dtos import (
     UserCreateDto,
 )
-from src.core.user.application.service.user_service import UserService
 from src.core.user.infra.database.repository import (
     DjangoUserRepository,
 )

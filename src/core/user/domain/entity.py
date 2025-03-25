@@ -6,14 +6,14 @@ from typing import Self
 from email_validator import validate_email
 from pydantic import ConfigDict, field_validator, model_validator
 
-from core.utils.enums import Status
+from src.core.shared.enums import Status
+from src.core.shared.hash import get_password_hash
+from src.core.shared.model import Model
 from src.core.user.domain.exceptions import (
     InvalidEmailError,
     InvalidPasswordError,
     InvalidUserError,
 )
-from src.core.utils.hash import get_password_hash
-from src.core.utils.model import Model
 
 LENGTH_PASSWORD = 8
 

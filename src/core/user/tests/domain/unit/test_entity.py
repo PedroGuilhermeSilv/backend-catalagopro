@@ -1,12 +1,11 @@
 import pytest
 
-from core.user.domain.entity import UserRole
-from core.utils.enums import Status
-from src.core.user.domain.entity import User
+from src.core.shared.enums import Status
+from src.core.shared.hash import verify_password
+from src.core.user.domain.entity import User, UserRole
 from src.core.user.domain.exceptions import (
     InvalidUserError,
 )
-from src.core.utils.hash import verify_password
 
 
 class TestUnitClassUser:

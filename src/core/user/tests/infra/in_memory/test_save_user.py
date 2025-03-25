@@ -3,12 +3,11 @@ from collections.abc import Generator
 
 import pytest
 
-from core.user.domain.entity import UserRole
-from core.user.infra.interfaces.repository import UserRepository
-from core.utils.enums import Status
+from src.core.shared.enums import Status
 from src.core.user.domain.dto import UserInput
-from src.core.user.domain.entity import User
+from src.core.user.domain.entity import User, UserRole
 from src.core.user.infra.in_memory.in_memory_user import InMemoryUserRepository
+from src.core.user.infra.interfaces.repository import UserRepository
 
 
 @pytest.fixture(scope="function")

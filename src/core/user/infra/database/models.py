@@ -3,8 +3,8 @@ import uuid
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.db import models
 
+from src.core.shared.enums import Status
 from src.core.user.infra.api.controllers.exceptions import InvalidEmail
-from src.core.utils.enums import Status
 
 
 class CustomUserManager(UserManager):

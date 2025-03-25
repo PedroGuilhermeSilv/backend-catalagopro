@@ -1,6 +1,5 @@
 from src.core.store.domain.entity import Store
-
-from core.store.infra.interfaces.repository import StoreRepository
+from src.core.store.infra.interfaces.repository import StoreRepository
 
 
 class UpdateStoreUseCase:

@@ -1,6 +1,6 @@
 from typing import Any
 
-from src.core.utils.model import Model
+from src.core.shared.model import Model
 
 
 class UploadedFile(Model):

@@ -1,4 +1,3 @@
-from core.user.infra.interfaces.repository import UserRepository
 from src.core.security.application.service.dto.jwt import (
     InputAuthUserDto,
     InputRefreshToken,
@@ -10,6 +9,7 @@ from src.core.security.application.use_cases.create_token import (
 from src.core.security.application.use_cases.refresh_token import (
     JWTRefresh,
 )
+from src.core.user.infra.interfaces.repository import UserRepository
 
 
 class SecurityService:

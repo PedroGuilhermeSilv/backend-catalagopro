@@ -1,4 +1,4 @@
-from src.core.utils.model import Model
+from src.core.shared.model import Model
 
 
 class JwtOutPutDto(Model):

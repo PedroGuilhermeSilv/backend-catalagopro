@@ -1,9 +1,9 @@
 from datetime import date
 
-from src.core.store.domain.entity import StoreStatus
-from src.core.utils.date import DayOfWeek
-from src.core.utils.file import UploadedFile
-from src.core.utils.model import Model
+from src.core.shared.enums import Status
+from src.core.shared.file import UploadedFile
+from src.core.shared.model import Model
+from src.core.store.domain.enums import DayOfWeek
 
 
 class BusinessHour(Model):
@@ -17,7 +17,7 @@ class InputServiceCreateStore(Model):
     email_owner: str
     description: str
     address: str
-    status: StoreStatus
+    status: Status
     whatsapp: str
     business_hours: list[BusinessHour]
     image: UploadedFile | None = None
@@ -32,7 +32,7 @@ class InputServiceUpdateStore(Model):
     address: str | None = None
     whatsapp: str | None = None
     business_hours: list[BusinessHour] | None = None
-    status: StoreStatus | None = None
+    status: Status | None = None
     owner_id: str | None = None
 
 
@@ -42,7 +42,7 @@ class StoreDto(Model):
     slug: str
     created_at: date
     updated_at: date
-    status: StoreStatus
+    status: Status
     logo_url: str
     description: str
     address: str

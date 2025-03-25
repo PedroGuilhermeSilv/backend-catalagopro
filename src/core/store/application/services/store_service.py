@@ -7,17 +7,16 @@ from src.core.store.application.services.dtos import (
     OutputServiceListStore,
 )
 from src.core.store.application.use_case.create_store import CreateStoreUseCase
+from src.core.store.application.use_case.delete_store import DeleteStoreUseCase
+from src.core.store.application.use_case.get_store_by_id import GetStoreByIdUseCase
 from src.core.store.application.use_case.list_store import ListStoreUseCase
+from src.core.store.application.use_case.update_store import UpdateStoreUseCase
 from src.core.store.domain.entity import Store
+from src.core.store.domain.enums import BusinessHour
 from src.core.store.infra.interfaces.repository import StoreRepository
 from src.core.user.application.use_case.get_user_by_email import GetUserByEmail
 from src.core.user.application.use_case.get_user_by_id import GetUserById
 from src.core.user.infra.interfaces.repository import UserRepository
-from src.core.utils.date import BusinessHour
-
-from core.store.application.use_case.delete_store import DeleteStoreUseCase
-from core.store.application.use_case.get_store_by_id import GetStoreByIdUseCase
-from core.store.application.use_case.update_store import UpdateStoreUseCase
 
 
 class StoreService:
@@ -77,7 +76,7 @@ class StoreService:
                     "slug": store.slug,
                     "created_at": store.created_at,
                     "updated_at": store.updated_at,
-                    "status": store.status,
+                    "status": store.status.value,
                     "logo_url": store.logo_url,
                     "description": store.description,
                     "address": store.address,

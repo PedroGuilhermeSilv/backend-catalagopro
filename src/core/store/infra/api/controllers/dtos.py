@@ -1,8 +1,8 @@
 from datetime import date
 
 from ninja import Schema
-from src.core.store.domain.entity import StoreStatus
-from src.core.utils.date import DayOfWeek
+from src.core.shared.enums import Status
+from src.core.store.domain.enums import DayOfWeek
 
 
 class Error(Schema):
@@ -29,7 +29,7 @@ class StoreUpdateDto(Schema):
     address: str | None = None
     whatsapp: str | None = None
     business_hours: list[BusinessHourCreateDto] | None = None
-    status: StoreStatus | None = None
+    status: Status | None = None
     owner_id: str | None = None
 
 
@@ -40,7 +40,7 @@ class StoreCreateOutputDto(Schema):
     description: str
     address: str
     whatsapp: str
-    status: StoreStatus
+    status: Status
     business_hours: list[BusinessHourCreateDto]
 
 
@@ -50,7 +50,7 @@ class StoreDto(Schema):
     slug: str
     created_at: date
     updated_at: date
-    status: StoreStatus
+    status: Status
     logo_url: str
     description: str
     address: str

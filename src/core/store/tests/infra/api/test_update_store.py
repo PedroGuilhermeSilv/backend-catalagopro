@@ -12,10 +12,10 @@ from ninja.testing import TestAsyncClient
 from PIL import Image, ImageDraw
 from src.core.store.application.use_case.create_store import CreateStoreUseCase
 from src.core.store.domain.entity import Store
+from src.core.store.domain.enums import BusinessHour, DayOfWeek
 from src.core.store.infra.database.repository import DjangoStoreRepository
 from src.core.user.domain.entity import User
 from src.core.user.infra.database.repository import DjangoUserRepository
-from src.core.utils.date import BusinessHour, DayOfWeek
 from src.framework.urls import api
 
 os.environ["NINJA_SKIP_REGISTRY"] = "yes"
@@ -143,7 +143,7 @@ class TestControllerUpdateStore:
         assert response_json["slug"] == create_store.slug
         assert response_json["address"] == create_store.address
         assert response_json["whatsapp"] == create_store.whatsapp
-        assert response_json["status"] == create_store.status
+        assert response_json["status"] == create_store.status.value
         assert response_json["owner_id"] == str(create_store.owner_id)
 
         assert "logo_url" in response_json

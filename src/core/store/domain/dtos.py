@@ -1,7 +1,8 @@
 from datetime import date
 
-from src.core.store.domain.entity import BusinessHour, StoreStatus
-from src.core.utils.model import Model
+from src.core.shared.enums import Status
+from src.core.shared.model import Model
+from src.core.store.domain.enums import BusinessHour
 
 
 class StoreListDto(Model):
@@ -10,7 +11,7 @@ class StoreListDto(Model):
     slug: str
     created_at: date
     updated_at: date
-    status: StoreStatus
+    status: Status
     logo_url: str
     description: str
     address: str

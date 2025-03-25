@@ -1,5 +1,5 @@
-from src.core.utils.file import UploadedFile
-from src.core.utils.model import Model
+from src.core.shared.file import UploadedFile
+from src.core.shared.model import Model
 
 
 class SaveFileInput(Model):

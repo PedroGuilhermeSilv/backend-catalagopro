@@ -4,22 +4,21 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 import pytest
+from src.core.shared.enums import Status
 from src.core.storage.infra.in_memory.in_memory_storage_repository import (
     InMemoryStorageRepository,
 )
+from src.core.storage.infra.interfaces.repository import StorageRepository
 from src.core.store.application.services.store_service import StoreService
 from src.core.store.domain.entity import Store
+from src.core.store.domain.enums import BusinessHour, DayOfWeek
 from src.core.store.infra.in_memory.in_memory_store_repository import (
     InMemoryStoreRepository,
 )
+from src.core.store.infra.interfaces.repository import StoreRepository
 from src.core.user.domain.entity import User, UserRole
 from src.core.user.infra.in_memory.in_memory_user import InMemoryUserRepository
-from src.core.utils.date import BusinessHour, DayOfWeek
-from src.core.utils.enums import Status
-
-from core.storage.infra.interfaces.repository import StorageRepository
-from core.store.infra.interfaces.repository import StoreRepository
-from core.user.infra.interfaces.repository import UserRepository
+from src.core.user.infra.interfaces.repository import UserRepository
 
 
 @pytest.fixture(scope="function")

@@ -1,8 +1,7 @@
 from src.core.store.domain.dtos import StoreListDto
 from src.core.store.domain.entity import Store
-
-from core.store.domain.exceptions import StoreNotFoundError
-from core.store.infra.interfaces.repository import StoreRepository
+from src.core.store.domain.exceptions import StoreNotFoundError
+from src.core.store.infra.interfaces.repository import StoreRepository
 
 
 class InMemoryStoreRepository(StoreRepository):

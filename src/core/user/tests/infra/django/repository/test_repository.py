@@ -3,14 +3,14 @@ import uuid
 import pytest
 import pytest_asyncio
 
-from core.utils.hash import verify_password
+from src.core.shared.enums import Status
+from src.core.shared.hash import verify_password
 from src.core.user.domain.entity import User, UserRole
 from src.core.user.domain.exceptions import UserNotFoundError
 from src.core.user.infra.database.repository import (
     DjangoUserRepository,
     UserInput,
 )
-from src.core.utils.enums import Status
 
 
 @pytest_asyncio.fixture

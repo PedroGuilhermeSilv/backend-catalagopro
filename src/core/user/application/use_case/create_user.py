@@ -1,4 +1,3 @@
-from core.user.infra.interfaces.repository import UserRepository
 from src.core.user.application.service.dto import (
     InputServiceCreateUser,
     OutputCreateUser,
@@ -7,6 +6,7 @@ from src.core.user.application.service.dto import (
 from src.core.user.domain.dto import UserInput
 from src.core.user.domain.entity import User
 from src.core.user.domain.exceptions import UserAlreadyExistError
+from src.core.user.infra.interfaces.repository import UserRepository
 
 
 class CreateUser:

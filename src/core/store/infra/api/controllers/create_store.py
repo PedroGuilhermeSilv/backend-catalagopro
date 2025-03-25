@@ -2,17 +2,16 @@ import json
 
 from ninja import File, Form
 from ninja.files import UploadedFile
+from src.core.shared.enums import Status
+from src.core.shared.file import UploadedFile as DomainUploadedFile
+from src.core.storage.infra.tebi_io.tebi_io_repository import TebiIOStorageRepository
 from src.core.store.application.services.dtos import InputServiceCreateStore
 from src.core.store.application.services.store_service import StoreService
-from src.core.store.domain.entity import StoreStatus
 from src.core.store.infra.api.controllers.dtos import (
     StoreCreateOutputDto,
 )
 from src.core.store.infra.database.repository import DjangoStoreRepository
 from src.core.user.infra.database.repository import DjangoUserRepository
-from src.core.utils.file import UploadedFile as DomainUploadedFile
-
-from core.storage.infra.tebi_io.tebi_io_repository import TebiIOStorageRepository
 
 
 async def create(
@@ -24,7 +23,7 @@ async def create(
     address: str = Form(...),
     whatsapp: str = Form(...),
     business_hours: str = Form(...),
-    status: StoreStatus = Form(...),
+    status: Status = Form(...),
 ):
     try:
         business_hours_list = json.loads(business_hours)

@@ -1,10 +1,10 @@
-from core.user.infra.interfaces.repository import UserRepository
 from src.core.security.application.service.dto.jwt import (
     InputRefreshToken,
     JwtOutPutDto,
 )
-from src.core.utils.exceptions.erros import UserNotFoundError
-from src.core.utils.token import create_token, verify_token
+from src.core.shared.exceptions.erros import UserNotFoundError
+from src.core.shared.token import create_token, verify_token
+from src.core.user.infra.interfaces.repository import UserRepository
 
 
 class JWTRefresh:

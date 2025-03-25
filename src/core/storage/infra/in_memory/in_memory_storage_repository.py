@@ -1,6 +1,5 @@
-from src.core.utils.file import UploadedFile
-
-from core.storage.infra.interfaces.repository import StorageRepository
+from src.core.shared.file import UploadedFile
+from src.core.storage.infra.interfaces.repository import StorageRepository
 
 
 class InMemoryStorageRepository(StorageRepository):

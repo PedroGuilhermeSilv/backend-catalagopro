@@ -2,22 +2,12 @@ import re
 import unicodedata
 import uuid
 from datetime import date
-from enum import Enum
 
 from pydantic import Field, model_validator
+from src.core.shared.enums import Status
+from src.core.shared.model import Model
+from src.core.store.domain.enums import BusinessHour
 from src.core.store.domain.exceptions import InvalidSlugError
-from src.core.utils.date import BusinessHour
-from src.core.utils.model import Model
-
-
-class StoreStatus(str, Enum):
-    ACTIVE = "ACTIVE"
-    INACTIVE = "INACTIVE"
-    PENDING = "PENDING"
-
-    @classmethod
-    def choices(cls):
-        return [(item.value, item.name) for item in cls]
 
 
 class Store(Model):
@@ -32,7 +22,7 @@ class Store(Model):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     created_at: date = Field(default_factory=date.today)
     updated_at: date = Field(default_factory=date.today)
-    status: StoreStatus = StoreStatus.ACTIVE
+    status: Status = Status.ACTIVE
 
     @model_validator(mode="after")
     def generate_slug(self):

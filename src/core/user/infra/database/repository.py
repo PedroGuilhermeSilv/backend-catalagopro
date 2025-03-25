@@ -1,10 +1,10 @@
 from asgiref.sync import sync_to_async
 
-from core.user.infra.interfaces.repository import UserRepository
 from src.core.store.infra.database.models import Store as StoreModel
 from src.core.user.domain.dto import UserInput, UserOutput
 from src.core.user.domain.exceptions import UserNotFoundError
 from src.core.user.infra.database.models import User as UserModel
+from src.core.user.infra.interfaces.repository import UserRepository
 
 
 class DjangoUserRepository(UserRepository):

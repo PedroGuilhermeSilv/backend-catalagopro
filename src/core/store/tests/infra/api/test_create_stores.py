@@ -9,9 +9,9 @@ from django.test import Client, override_settings
 from django.test.client import BOUNDARY, encode_multipart
 from ninja.testing import TestAsyncClient
 from PIL import Image
+from src.core.store.domain.enums import DayOfWeek
 from src.core.user.domain.entity import User
 from src.core.user.infra.database.repository import DjangoUserRepository
-from src.core.utils.date import DayOfWeek
 from src.framework.urls import api
 
 os.environ["NINJA_SKIP_REGISTRY"] = "yes"

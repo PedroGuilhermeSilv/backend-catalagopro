@@ -2,9 +2,9 @@ import uuid
 
 from pydantic import field_validator
 
-from core.user.domain.entity import UserRole
-from core.utils.enums import Status
-from core.utils.model import Model
+from src.core.shared.enums import Status
+from src.core.shared.model import Model
+from src.core.user.domain.entity import UserRole
 
 
 class ModelValidator(Model):

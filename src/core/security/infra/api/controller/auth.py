@@ -5,7 +5,7 @@ from django.http import HttpRequest
 from ninja.errors import HttpError
 from ninja.security import HttpBearer
 
-from src.core.utils.token import verify_token
+from src.core.shared.token import verify_token
 
 
 class AuthBearer(HttpBearer):
