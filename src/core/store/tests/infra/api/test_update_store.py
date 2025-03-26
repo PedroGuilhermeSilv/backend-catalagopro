@@ -13,7 +13,7 @@ from PIL import Image, ImageDraw
 from src.core.store.application.use_case.create_store import CreateStoreUseCase
 from src.core.store.domain.entity import Store
 from src.core.store.domain.enums import BusinessHour, DayOfWeek
-from src.core.store.infra.database.repository import DjangoStoreRepository
+from src.core.store.infra.django.repository import DjangoStoreRepository
 from src.core.user.domain.entity import User
 from src.core.user.infra.database.repository import DjangoUserRepository
 from src.framework.urls import api

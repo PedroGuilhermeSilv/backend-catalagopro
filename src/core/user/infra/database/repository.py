@@ -1,6 +1,6 @@
 from asgiref.sync import sync_to_async
 
-from src.core.store.infra.database.models import Store as StoreModel
+from src.core.store.infra.database.django.models import Store as StoreModel
 from src.core.user.domain.dto import UserInput, UserOutput
 from src.core.user.domain.exceptions import UserNotFoundError
 from src.core.user.infra.database.models import User as UserModel

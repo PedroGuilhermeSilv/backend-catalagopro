@@ -1,5 +1,5 @@
+from core.products.infra.database.repository import ProductRepository
 from src.core.products.domain.entity import Product
-from src.core.products.infra.repository import ProductRepository
 
 
 class InMemoryProductRepository(ProductRepository):

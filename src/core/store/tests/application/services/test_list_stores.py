@@ -12,13 +12,14 @@ from src.core.storage.infra.interfaces.repository import StorageRepository
 from src.core.store.application.services.store_service import StoreService
 from src.core.store.domain.entity import Store
 from src.core.store.domain.enums import BusinessHour, DayOfWeek
-from src.core.store.infra.in_memory.in_memory_store_repository import (
+from src.core.store.infra.database.in_memory.in_memory_store_repository import (
     InMemoryStoreRepository,
 )
-from src.core.store.infra.interfaces.repository import StoreRepository
 from src.core.user.domain.entity import User, UserRole
 from src.core.user.infra.in_memory.in_memory_user import InMemoryUserRepository
 from src.core.user.infra.interfaces.repository import UserRepository
+
+from core.store.infra.database.repository import StoreRepository
 
 
 @pytest.fixture(scope="function")

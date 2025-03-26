@@ -1,6 +1,7 @@
-from enum import Enum
-from src.core.shared.model import Model
 from datetime import time
+from enum import Enum
+
+from src.core.shared.model import Model
 
 
 class DayOfWeek(Enum):

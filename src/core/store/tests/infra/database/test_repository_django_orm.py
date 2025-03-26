@@ -7,7 +7,7 @@ from src.core.shared.enums import Status
 from src.core.store.domain.entity import BusinessHour, Store
 from src.core.store.domain.enums import DayOfWeek
 from src.core.store.domain.exceptions import StoreNotFoundError
-from src.core.store.infra.database.repository import DjangoStoreRepository
+from src.core.store.infra.django.repository import DjangoStoreRepository
 from src.core.user.domain.entity import User, UserRole
 from src.core.user.infra.database.models import User as UserModel
 

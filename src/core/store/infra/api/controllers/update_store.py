@@ -9,7 +9,7 @@ from src.core.store.application.services.dtos import InputServiceUpdateStore
 from src.core.store.application.services.store_service import StoreService
 from src.core.store.domain.entity import Status
 from src.core.store.infra.api.controllers.dtos import StoreUpdateDto
-from src.core.store.infra.database.repository import DjangoStoreRepository
+from src.core.store.infra.django.repository import DjangoStoreRepository
 from src.core.user.infra.database.repository import DjangoUserRepository
 
 

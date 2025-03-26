@@ -1,6 +1,7 @@
+import uuid
 from datetime import datetime
 from typing import Any
-import uuid
+
 from pydantic import Field
 
 from src.core.shared.model import Model
@@ -34,6 +35,7 @@ class SizePrice(Model):
 
 class Product(Model):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    store_id: str
     name: str
     description: str
     default_price: Price | None = None
@@ -48,7 +50,8 @@ class Product(Model):
 
     def validate(self):
         if self.default_price is None and self.size_price is None:
-            raise ValueError("O produto deve ter pelo menos um preço")
+            msg = "O produto deve ter pelo menos um preço"
+            raise ValueError(msg)
 
     @property
     def has_sizes(self) -> bool:
@@ -68,5 +71,5 @@ class Product(Model):
             for size_price in self.size_price:
                 if size_price.size.id == size_id:
                     return size_price.price.value
-
-        raise ValueError("Preço não encontrado para o tamanho especificado")
+        msg = "Preço não encontrado para o tamanho especificado"
+        raise ValueError(msg)
