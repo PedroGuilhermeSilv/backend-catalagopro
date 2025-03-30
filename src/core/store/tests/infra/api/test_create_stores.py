@@ -21,11 +21,11 @@ STATUS_CODE_401 = 401
 
 
 @pytest_asyncio.fixture
-async def create_user(client, debug_settings):
+async def create_user():
     # Criação do usuário
     user = await DjangoUserRepository().save(
         User(
-            email="teste@teste.com",
+            email="teste120@teste.com",
             password="12345678",
             name="Teste",
             role="ADMIN",

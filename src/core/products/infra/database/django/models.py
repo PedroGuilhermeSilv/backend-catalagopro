@@ -8,11 +8,13 @@ from src.core.store.infra.database.django.models import Store
 class Category(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
+    store = models.ForeignKey(Store, on_delete=models.CASCADE)
 
 
 class Size(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
+    store = models.ForeignKey(Store, on_delete=models.CASCADE)
 
 
 class Price(models.Model):

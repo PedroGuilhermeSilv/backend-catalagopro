@@ -11,25 +11,46 @@ from src.core.products.domain.entity import (
     Size,
     SizePrice,
 )
+from src.core.store.domain.entity import BusinessHour, Store
 
 DEFAULT_PRICE = 10.0
 
 
 @pytest.fixture
-def category():
-    return Category(
-        name="Bebidas",
+def store() -> Store:
+    return Store(
+        name="Loja Teste",
+        owner_id=str(uuid.uuid4()),
+        logo_url="https://example.com/logo.png",
+        description="Descrição da loja",
+        address="Rua Teste, 123",
+        whatsapp="11999999999",
+        business_hours=[
+            BusinessHour(
+                day=1,
+                open_hour="08:00",
+                close_hour="18:00",
+            ),
+        ],
     )
 
 
 @pytest.fixture
-def price():
+def category(store: Store) -> Category:
+    return Category(
+        name="Bebidas",
+        store_id=str(store.id),
+    )
+
+
+@pytest.fixture
+def price() -> Price:
     return Price(value=10.0)
 
 
 @pytest.fixture
-def size():
-    return Size(name="P")
+def size(store: Store) -> Size:
+    return Size(name="P", store_id=str(store.id))
 
 
 @pytest.fixture
@@ -38,7 +59,12 @@ def image():
 
 
 class TestProduct:
-    def test_create_product_with_default_price(self, category, price, image):
+    def test_create_product_with_default_price(
+        self,
+        category: Category,
+        price: Price,
+        image: Image,
+    ):
         """Deve criar um produto com preço único"""
         product = Product(
             store_id=str(uuid.uuid4()),
@@ -55,7 +81,13 @@ class TestProduct:
         assert product.default_price.value == DEFAULT_PRICE
         assert product.has_sizes is False
 
-    def test_create_product_with_size_prices(self, category, price, size, image):
+    def test_create_product_with_size_prices(
+        self,
+        category: Category,
+        price: Price,
+        size: Size,
+        image: Image,
+    ):
         """Deve criar um produto com variação de tamanhos"""
         size_price = SizePrice(size=size, price=price)
 
@@ -162,17 +194,17 @@ class TestProduct:
 
 
 class TestCategory:
-    def test_create_category(self):
+    def test_create_category(self, store: Store):
         """Deve criar uma categoria com os campos corretos"""
-        category = Category(name="Bebidas")
+        category = Category(name="Bebidas", store_id=str(store.id))
 
         assert category.name == "Bebidas"
 
 
 class TestSize:
-    def test_create_size(self):
+    def test_create_size(self, store: Store):
         """Deve criar um tamanho com os campos corretos"""
-        size = Size(name="P")
+        size = Size(name="P", store_id=str(store.id))
         assert size.name == "P"
         assert isinstance(size.id, str)
 

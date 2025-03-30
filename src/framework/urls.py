@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path
 from ninja import NinjaAPI
 
+from src.core.products.infra.api.config import router_category as category_router
+from src.core.products.infra.api.config import router_size as size_router
 from src.core.security.infra.api.controller.dto import (
     router as login_router,
 )
@@ -13,6 +15,8 @@ api = NinjaAPI(urls_namespace="api-1.0.0")
 api.add_router("/user", user_router)
 api.add_router("/auth", login_router)
 api.add_router("/store", store_router)
+api.add_router("/category", category_router)
+api.add_router("/size", size_router)
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", api.urls),

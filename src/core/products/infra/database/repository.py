@@ -5,17 +5,25 @@ from src.core.products.domain.entity import Category, Product, Size
 
 class ProductRepository(ABC):
     @abstractmethod
-    def create(self, product: Product) -> Product:
+    async def create(self, product: Product) -> Product:
         pass
 
 
 class CategoryRepository(ABC):
     @abstractmethod
-    def create(self, category: Category) -> Category:
+    async def create(self, category: Category) -> Category:
+        pass
+
+    @abstractmethod
+    async def list(self, store_id: str) -> list[Category]:
         pass
 
 
 class SizeRepository(ABC):
     @abstractmethod
-    def create(self, size: Size) -> Size:
+    async def create(self, size: Size) -> Size:
+        pass
+
+    @abstractmethod
+    async def list(self, store_id: str) -> list[Size]:
         pass

@@ -9,3 +9,6 @@ class InMemoryProductRepository(ProductRepository):
     def create(self, product: Product) -> Product:
         self.products.append(product)
         return product
+
+    def list(self, store_id: str) -> list[Product]:
+        return [product for product in self.products if product.store_id == store_id]

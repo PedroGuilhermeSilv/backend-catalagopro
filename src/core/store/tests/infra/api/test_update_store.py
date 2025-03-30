@@ -1,7 +1,6 @@
 import io
 import json
 import os
-import uuid
 
 import pytest
 import pytest_asyncio
@@ -26,13 +25,10 @@ STATUS_CODE_201 = 201
 
 
 @pytest_asyncio.fixture
-async def create_store(client, debug_settings):
-    # Criação do usuário com email único
-    unique_email = f"teste_{uuid.uuid4().hex[:8]}@teste.com"
-
+async def create_store():
     user = await DjangoUserRepository().save(
         User(
-            email=unique_email,
+            email="teste4@teste.com",
             password="12345678",
             name="Teste",
             role="ADMIN",
@@ -44,8 +40,8 @@ async def create_store(client, debug_settings):
     use_case = CreateStoreUseCase(DjangoStoreRepository())
     store = await use_case.execute(
         Store(
-            name="Teste",
-            slug="teste",
+            name="Teste 90",
+            slug="teste-90",
             owner_id=str(user.id),
             status="ACTIVE",
             address="Rua Teste",

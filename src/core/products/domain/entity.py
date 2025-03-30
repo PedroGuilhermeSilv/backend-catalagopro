@@ -10,11 +10,13 @@ from src.core.shared.model import Model
 class Category(Model):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str
+    store_id: str
 
 
 class Size(Model):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str
+    store_id: str
 
 
 class Price(Model):
@@ -45,7 +47,7 @@ class Product(Model):
     created_at: datetime
     updated_at: datetime
 
-    def model_post_init(self, __context: Any) -> None:
+    def model_post_init(self, __context: Any) -> None:  # noqa: PYI063
         self.validate()
 
     def validate(self):
@@ -67,7 +69,7 @@ class Product(Model):
         if not size_id and self.default_price:
             return self.default_price.value
 
-        if self.size_price and size_id:
+        if size_id and self.size_price is not None:
             for size_price in self.size_price:
                 if size_price.size.id == size_id:
                     return size_price.price.value

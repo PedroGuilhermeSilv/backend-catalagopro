@@ -60,6 +60,9 @@ line-length = 88
 exclude = ["*/migrations/*"]
 
 
+[tool.pylint.messages.control]
+disable = ["C0114"]  # missing-module-docstring
+
 [tool.ruff.lint]
 ignore = ["N818", "EXE002", "PLR0913"]
 select = [
