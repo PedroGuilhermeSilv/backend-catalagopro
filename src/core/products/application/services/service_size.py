@@ -13,7 +13,9 @@ from src.core.store.infra.database.repository import StoreRepository
 
 class SizeService:
     def __init__(
-        self, size_repository: SizeRepository, store_repository: StoreRepository,
+        self,
+        size_repository: SizeRepository,
+        store_repository: StoreRepository,
     ):
         self.size_repository = size_repository
         self.store_repository = store_repository

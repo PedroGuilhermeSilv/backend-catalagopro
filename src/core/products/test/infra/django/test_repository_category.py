@@ -68,3 +68,13 @@ class TestDjangoCategoryRepository:
         categories = await repository.list(store_id=str(created_category.store_id))
         assert len(categories) == 1
         assert categories[0].id == created_category.id
+
+    @pytest.mark.asyncio
+    async def test_get_by_id(self, store: StoreModel):
+        repository = DjangoCategoryRepository()
+        category = Category(name="Test Category", store_id=str(store.id))
+        created_category = await repository.create(category)
+        category_by_id = await repository.get_by_id(created_category.id)
+        assert category_by_id.id == created_category.id
+        assert category_by_id.name == created_category.name
+        assert category_by_id.store_id == created_category.store_id

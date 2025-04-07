@@ -38,6 +38,14 @@ class CategoryService:
             store_id=str(store.id),
         )
 
+    async def get_category_by_id(self, id: str) -> CategoryOutputDto:
+        category_on_db = await self.uc_get_by_id_category.execute(id)
+        return CategoryOutputDto(
+            id=category_on_db.id,
+            name=category_on_db.name,
+            store_id=str(category_on_db.store_id),
+        )
+
     async def list_categories(self, store_slug: str) -> CategoryListOutputDto:
         store = await self.uc_get_store.execute(store_slug)
         categories = await self.uc_list_categories.execute(store.id)

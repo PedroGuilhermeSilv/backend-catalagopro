@@ -44,8 +44,8 @@ class Product(Model):
     size_price: list[SizePrice] | None = None
     category: Category
     image: list[Image]
-    created_at: datetime
-    updated_at: datetime
+    created_at: datetime = Field(default_factory=datetime.now)
+    updated_at: datetime = Field(default_factory=datetime.now)
 
     def model_post_init(self, __context: Any) -> None:  # noqa: PYI063
         self.validate()
