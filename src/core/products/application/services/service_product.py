@@ -11,7 +11,7 @@ from src.core.products.application.use_case.uc_create_product import (
 from src.core.products.application.use_case.uc_create_size_price import (
     UCCreateSizePrice,
 )
-from src.core.products.domain.entity import Price, Product, Size, SizePrice
+from src.core.products.domain.entity import Price, Product, SizePrice
 from src.core.products.infra.database.repository import (
     CategoryRepository,
     ProductRepository,
@@ -38,20 +38,20 @@ class ServiceProduct:
     async def create_product(self, input: ProductInputDto) -> ProductOutputDto:
         category = await self.service_category.get_category_by_id(input.category_id)
         default_price = None
-        if input.price:
+        if input.default_price:
             default_price = Price(value=input.price)
         size_price = []
         if input.sizes:
             for size_price in input.sizes:
-                size = self.service_size.g
+                size = await self.service_size.get_size_by_id(size_price.size_id)
                 price = await self.uc_create_size_price.execute(
                     SizePrice(
-                        Size(
-                            size_price.si,
-                        ),
-                    )
+                        size=size,
+                        price=Price(value=size_price.price),
+                    ),
                 )
-            size_price = await self.uc_create_size_price.execute(input.size_id)
+                size_price.append(price)
+
         product = Product(
             name=input.name,
             description=input.description,

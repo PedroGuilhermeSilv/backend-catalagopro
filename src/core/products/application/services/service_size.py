@@ -39,3 +39,7 @@ class SizeService:
                 for size in sizes
             ],
         )
+
+    async def get_size_by_id(self, id: str) -> SizeOutputDto:
+        size = await self.size_repository.get_by_id(id)
+        return SizeOutputDto(id=size.id, name=size.name, store_id=str(size.store_id))

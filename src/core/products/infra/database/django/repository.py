@@ -110,6 +110,10 @@ class DjangoSizeRepository(SizeRepository):
             for size in sizes
         ]
 
+    async def get_by_id(self, id: str) -> Size:
+        size_model = await self.model.objects.aget(id=id)
+        return self.convert_to_domain(size_model)
+
 
 class DjangoProductRepository(ProductRepository):
     def __init__(self):

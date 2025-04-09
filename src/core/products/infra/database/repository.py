@@ -32,6 +32,10 @@ class SizeRepository(ABC):
     async def list(self, store_id: str) -> list[Size]:
         pass
 
+    @abstractmethod
+    async def get_by_id(self, id: str) -> Size:
+        pass
+
 
 class SizePriceRepository(ABC):
     @abstractmethod
