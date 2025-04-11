@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from src.core.products.domain.entity import Category, Product, Size, SizePrice
+from src.core.products.domain.entity import Category, Image, Product, Size, SizePrice
 
 
 class ProductRepository(ABC):
@@ -40,4 +40,10 @@ class SizeRepository(ABC):
 class SizePriceRepository(ABC):
     @abstractmethod
     async def create(self, size_price: SizePrice) -> SizePrice:
+        pass
+
+
+class ImageRepository(ABC):
+    @abstractmethod
+    async def create(self, image: Image) -> Image:
         pass

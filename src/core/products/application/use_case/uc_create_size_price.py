@@ -1,5 +1,5 @@
-from core.products.infra.database.django.models import SizePrice
-from core.products.infra.database.repository import SizePriceRepository
+from src.core.products.infra.database.django.models import SizePrice
+from src.core.products.infra.database.repository import SizePriceRepository
 
 
 class UCCreateSizePrice:

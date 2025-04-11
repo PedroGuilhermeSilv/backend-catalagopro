@@ -1,7 +1,9 @@
+from datetime import datetime
 from typing import Any
 
 from pydantic import BaseModel
 
+from src.core.products.domain.entity import Category, Image, Price, SizePrice
 from src.core.shared.file import UploadedFile
 
 
@@ -59,9 +61,12 @@ class ProductInputDto(BaseModel):
 
 class ProductOutputDto(BaseModel):
     id: str
+    store_id: str
     name: str
     description: str
-    category_id: str
-    size_id: str
-    price: float
-    image: list[str]
+    default_price: Price | None = None
+    size_price: list[SizePrice] | None = None
+    category: Category
+    image: list[Image]
+    created_at: datetime
+    updated_at: datetime

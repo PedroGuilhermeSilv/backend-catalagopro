@@ -32,6 +32,7 @@ from src.core.products.infra.database.django.models import (
 )
 from src.core.products.infra.database.repository import (
     CategoryRepository,
+    ImageRepository,
     ProductRepository,
     SizePriceRepository,
     SizeRepository,
@@ -280,3 +281,21 @@ class DjangoSizePriceRepository(SizePriceRepository):
             price=price_model,
         )
         return await self.convert_to_domain_async(size_price_model)
+
+
+class DjangoImageRepository(ImageRepository):
+    def __init__(self):
+        self.model = ImageModel
+        self.product_model = ProductModel
+
+    async def create(self, image: Image, product_id: str) -> Image:
+        product_model = await self.product_model.objects.aget(id=product_id)
+        image_model = await self.model.objects.acreate(
+            id=image.id,
+            url=image.url,
+            product=product_model,
+        )
+        return Image(
+            id=str(image_model.id),
+            url=image_model.url,
+        )

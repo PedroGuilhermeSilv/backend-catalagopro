@@ -6,6 +6,9 @@ from src.core.products.application.services.dto import (
 from src.core.products.application.use_case.uc_create_category import (
     CreateCategoryUseCase,
 )
+from src.core.products.application.use_case.uc_get_by_id_category import (
+    UCGetByIdCategory,
+)
 from src.core.products.application.use_case.uc_list_categories import (
     ListCategoriesUseCase,
 )
@@ -26,6 +29,7 @@ class CategoryService:
         self.uc_create_category = CreateCategoryUseCase(self.category_repository)
         self.uc_get_store = GetStoreBySlugUseCase(self.store_repository)
         self.uc_list_categories = ListCategoriesUseCase(self.category_repository)
+        self.uc_get_by_id_category = UCGetByIdCategory(self.category_repository)
 
     async def create_category(self, category: CategoryInputDto) -> CategoryOutputDto:
         store = await self.uc_get_store.execute(category.store_slug)
