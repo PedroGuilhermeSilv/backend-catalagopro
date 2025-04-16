@@ -1,0 +1,15 @@
+**__pycache__/
+.history/
+*.pyc
+.docker/zsh/history/.zsh_history
+.ssh/
+__pypackages__
+.pytest_cache
+.env
+.ruff_cache/
+.venv/
+*.egg-info
+db.sqlite3
+staticfiles/
+data/
+acoes_usuario.txt
